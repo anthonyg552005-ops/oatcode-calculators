@@ -113,12 +113,71 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        .search-container {
+            max-width: 1200px;
+            margin: -40px auto 40px;
+            padding: 0 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .search-box {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        #searchInput {
+            width: 100%;
+            padding: 18px 24px;
+            font-size: 18px;
+            border: 2px solid #E2E8F0;
+            border-radius: 10px;
+            transition: all 0.3s;
+        }
+
+        #searchInput:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+        }
+
+        .search-results-count {
+            margin-top: 15px;
+            text-align: center;
+            color: #718096;
+            font-size: 16px;
+        }
+
+        .search-results-count span {
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .calc-card.hidden {
+            display: none;
+        }
+
+        .section-title.hidden {
+            display: none;
+        }
     </style>
 </head>
 <body>
     <div class="hero">
         <h1>📊 150+ Free Business Calculators</h1>
         <p>Calculate pricing, fees, revenue, and costs for your business. 100% free, no signup required.</p>
+    </div>
+
+    <div class="search-container">
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="🔍 Search calculators... (e.g., 'Shopify', 'CRM', 'email marketing')" />
+            <div class="search-results-count">
+                Showing <span id="visibleCount">150</span> of <span id="totalCount">150</span> calculators
+            </div>
+        </div>
     </div>
 
     <div class="container">
@@ -1093,5 +1152,60 @@
         <p>&copy; 2024 OatCode Calculators. All calculators are free to use.</p>
         <p style="margin-top: 10px; opacity: 0.8;">Built to help entrepreneurs, freelancers, and creators make better financial decisions.</p>
     </div>
+
+    <script>
+        // Live search functionality
+        const searchInput = document.getElementById('searchInput');
+        const calcCards = document.querySelectorAll('.calc-card');
+        const sectionTitles = document.querySelectorAll('.section-title');
+        const visibleCountSpan = document.getElementById('visibleCount');
+        const totalCountSpan = document.getElementById('totalCount');
+
+        totalCountSpan.textContent = calcCards.length;
+
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase().trim();
+            let visibleCount = 0;
+
+            // Filter calculator cards
+            calcCards.forEach(card => {
+                const title = card.querySelector('h3').textContent.toLowerCase();
+                const description = card.querySelector('p').textContent.toLowerCase();
+                const category = card.querySelector('.calc-category').textContent.toLowerCase();
+
+                if (title.includes(searchTerm) || description.includes(searchTerm) || category.includes(searchTerm)) {
+                    card.classList.remove('hidden');
+                    visibleCount++;
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+
+            // Hide section titles if all cards in that section are hidden
+            sectionTitles.forEach(title => {
+                const nextGrid = title.nextElementSibling;
+                if (nextGrid && nextGrid.classList.contains('calculator-grid')) {
+                    const visibleCards = nextGrid.querySelectorAll('.calc-card:not(.hidden)');
+                    if (visibleCards.length === 0) {
+                        title.classList.add('hidden');
+                    } else {
+                        title.classList.remove('hidden');
+                    }
+                }
+            });
+
+            // Update count
+            visibleCountSpan.textContent = visibleCount;
+        });
+
+        // Clear search with Escape key
+        searchInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                this.value = '';
+                this.dispatchEvent(new Event('input'));
+                this.blur();
+            }
+        });
+    </script>
 </body>
 </html>
