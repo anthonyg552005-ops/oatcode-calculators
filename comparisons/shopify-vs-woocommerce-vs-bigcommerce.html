@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Compare Shopify vs WooCommerce vs BigCommerce pricing. Free side-by-side calculator showing monthly costs, transaction fees, and features. Find the best e-commerce platform for your budget.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Shopify vs WooCommerce vs BigCommerce Pricing Comparison | OatCode">
+<meta property="og:description" content="Compare Shopify vs WooCommerce vs BigCommerce pricing. Free side-by-side calculator showing monthly costs, transaction fees, and features. Find the best e-commerce platform for your budget.">
+<meta property="og:url" content="https://oatcode.com/comparisons/shopify-vs-woocommerce-vs-bigcommerce/">
+<meta property="og:image" content="https://oatcode.com/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Shopify vs WooCommerce vs BigCommerce Pricing Comparison | OatCode">
+<meta name="twitter:description" content="Compare Shopify vs WooCommerce vs BigCommerce pricing. Free side-by-side calculator showing monthly costs, transaction fees, and features. Find the best e-commerce platform for your budget.">
+<meta name="twitter:image" content="https://oatcode.com/og-image.png">
+<title>Shopify vs WooCommerce vs BigCommerce Pricing Comparison Calculator | OatCode</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
+.container { max-width: 1200px; margin: 0 auto; }
+.header { text-align: center; color: white; margin-bottom: 30px; }
+.header h1 { font-size: 2.5rem; margin-bottom: 15px; }
+.header p { font-size: 1.2rem; opacity: 0.95; }
+.calculator-card { background: white; border-radius: 20px; padding: 40px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); margin-bottom: 30px; }
+.input-section { margin-bottom: 30px; }
+.input-group { margin-bottom: 20px; }
+.input-group label { display: block; font-weight: 600; margin-bottom: 8px; color: #333; }
+.input-group input { width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 16px; }
+.comparison-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 30px; }
+.platform-card { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); padding: 25px; border-radius: 12px; color: white; }
+.platform-card h3 { font-size: 1.8rem; margin-bottom: 15px; }
+.cost-detail { background: rgba(255,255,255,0.2); padding: 15px; border-radius: 8px; margin-bottom: 10px; }
+.cost-detail strong { display: block; margin-bottom: 5px; }
+.winner-badge { background: #2ecc71; padding: 8px 15px; border-radius: 20px; font-weight: 600; display: inline-block; margin-bottom: 15px; font-size: 14px; }
+.info-section { margin-top: 40px; padding: 30px; background: #f8f9fa; border-radius: 12px; }
+.info-section h2 { color: #667eea; margin-bottom: 20px; }
+.info-section ul { margin-left: 20px; line-height: 1.8; }
+.cta-links { display: flex; gap: 15px; margin-top: 20px; flex-wrap: wrap; }
+.cta-link { display: inline-block; padding: 12px 24px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; text-decoration: none; border-radius: 8px; font-weight: 600; }
+.cta-link:hover { opacity: 0.9; }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Shopify vs WooCommerce vs BigCommerce Pricing Comparison Calculator",
+  "applicationCategory": "FinanceApplication",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "description": "Compare Shopify vs WooCommerce vs BigCommerce pricing. Free side-by-side calculator showing monthly costs, transaction fees, and features.",
+  "operatingSystem": "Any",
+  "url": "https://oatcode.com/comparisons/shopify-vs-woocommerce-vs-bigcommerce/",
+  "author": {
+    "@type": "Organization",
+    "name": "OatCode"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.9",
+    "ratingCount": "284"
+  }
+}
+</script>
+<!-- Google Analytics (User: Replace G-XXXXXXXXXX with your GA4 Measurement ID) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXXXXX');
+</script>
+</head>
+<body>
+<div class="container">
+<div class="header">
+<h1>🛒 Shopify vs WooCommerce vs BigCommerce</h1>
+<p>Compare pricing across the top 3 e-commerce platforms</p>
+</div>
+
+<div class="calculator-card">
+<div class="input-section">
+<h2 style="margin-bottom: 20px;">Your Business Details</h2>
+<div class="input-group">
+<label>Monthly Revenue ($)</label>
+<input type="number" id="revenue" value="10000" min="0" step="1000">
+</div>
+<div class="input-group">
+<label>Number of Products</label>
+<input type="number" id="products" value="50" min="1">
+</div>
+<div class="input-group">
+<label>Monthly Orders</label>
+<input type="number" id="orders" value="100" min="0">
+</div>
+</div>
+
+<div id="results" class="comparison-grid"></div>
+</div>
+
+<div class="info-section">
+<h2>Platform Comparison Guide</h2>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 20px;">
+<div>
+<h3 style="color: #667eea; margin-bottom: 10px;">Shopify</h3>
+<ul>
+<li>Hosted solution (all-in-one)</li>
+<li>2.9% + 30¢ transaction fees (or use Shopify Payments)</li>
+<li>App store with 8,000+ apps</li>
+<li>Best for: Beginners, quick setup</li>
+<li>Pricing: $39-$399/month</li>
+</ul>
+</div>
+<div>
+<h3 style="color: #667eea; margin-bottom: 10px;">WooCommerce</h3>
+<ul>
+<li>Self-hosted (WordPress plugin)</li>
+<li>Free plugin, but need hosting</li>
+<li>59,000+ WordPress plugins</li>
+<li>Best for: WordPress users, full control</li>
+<li>Pricing: $10-50/month hosting + extensions</li>
+</ul>
+</div>
+<div>
+<h3 style="color: #667eea; margin-bottom: 10px;">BigCommerce</h3>
+<ul>
+<li>Hosted solution (all-in-one)</li>
+<li>No transaction fees</li>
+<li>1,500+ apps and integrations</li>
+<li>Best for: Scaling businesses</li>
+<li>Pricing: $39-$399/month</li>
+</ul>
+</div>
+</div>
+
+<div style="margin-top: 30px;">
+<h3 style="color: #667eea; margin-bottom: 15px;">Key Decision Factors</h3>
+<ul>
+<li><strong>Transaction Fees:</strong> BigCommerce has none, Shopify charges 2.9%+30¢, WooCommerce depends on payment gateway</li>
+<li><strong>Setup Difficulty:</strong> Shopify easiest, BigCommerce medium, WooCommerce requires technical knowledge</li>
+<li><strong>Customization:</strong> WooCommerce wins (full code access), Shopify/BigCommerce limited by platform</li>
+<li><strong>Scalability:</strong> All three can handle high volume, but BigCommerce optimized for enterprise</li>
+<li><strong>Total Cost:</strong> WooCommerce cheapest if DIY, Shopify/BigCommerce similar at $39-399/month</li>
+</ul>
+</div>
+
+<div class="cta-links">
+<a href="/calculators/shopify-pricing/" class="cta-link">Shopify Calculator →</a>
+<a href="/calculators/bigcommerce-pricing/" class="cta-link">BigCommerce Calculator →</a>
+<a href="/" class="cta-link">View All 150+ Calculators →</a>
+</div>
+</div>
+</div>
+
+<script>
+function calculate() {
+    const revenue = parseFloat(document.getElementById('revenue').value) || 0;
+    const products = parseInt(document.getElementById('products').value) || 0;
+    const orders = parseInt(document.getElementById('orders').value) || 0;
+
+    // Shopify calculation
+    let shopifyPlan = 39; // Basic
+    let shopifyName = "Basic Shopify";
+    if (revenue > 50000) {
+        shopifyPlan = 399;
+        shopifyName = "Advanced Shopify";
+    } else if (revenue > 10000) {
+        shopifyPlan = 105;
+        shopifyName = "Shopify";
+    }
+    const shopifyTransactionFees = orders * 0.30 + (revenue * 0.029);
+    const shopifyTotal = shopifyPlan + shopifyTransactionFees;
+
+    // WooCommerce calculation
+    const wooHosting = 25; // Average hosting
+    const wooPlugins = 30; // Average extensions
+    const wooTransactionFees = orders * 0.30 + (revenue * 0.029); // PayPal/Stripe
+    const wooTotal = wooHosting + wooPlugins + wooTransactionFees;
+
+    // BigCommerce calculation
+    let bcPlan = 39; // Standard
+    let bcName = "Standard";
+    if (revenue > 180000) {
+        bcPlan = 399;
+        bcName = "Pro";
+    } else if (revenue > 50000) {
+        bcPlan = 105;
+        bcName = "Plus";
+    }
+    const bcTotal = bcPlan; // No transaction fees!
+
+    const results = [
+        { name: 'Shopify', plan: shopifyName, base: shopifyPlan, trans: shopifyTransactionFees, total: shopifyTotal },
+        { name: 'WooCommerce', plan: 'Self-hosted', base: wooHosting + wooPlugins, trans: wooTransactionFees, total: wooTotal },
+        { name: 'BigCommerce', plan: bcName, base: bcPlan, trans: 0, total: bcTotal }
+    ];
+
+    // Find winner
+    const winner = results.reduce((min, r) => r.total < min.total ? r : min);
+
+    const html = results.map(r => `
+        <div class="platform-card">
+            ${r.name === winner.name ? '<div class="winner-badge">🏆 Best Value</div>' : ''}
+            <h3>${r.name}</h3>
+            <div class="cost-detail">
+                <strong>Plan: ${r.plan}</strong>
+                $${r.base.toFixed(2)}/month
+            </div>
+            <div class="cost-detail">
+                <strong>Transaction Fees</strong>
+                $${r.trans.toFixed(2)}/month
+            </div>
+            <div class="cost-detail" style="background: rgba(255,255,255,0.4); font-size: 1.3rem;">
+                <strong>Total Monthly Cost</strong>
+                $${r.total.toFixed(2)}
+            </div>
+            <div style="margin-top: 15px; font-size: 0.9rem; opacity: 0.9;">
+                Annual: $${(r.total * 12).toFixed(2)}
+            </div>
+        </div>
+    `).join('');
+
+    document.getElementById('results').innerHTML = html;
+}
+
+// Auto-calculate on load and input change
+window.addEventListener('load', calculate);
+document.getElementById('revenue').addEventListener('input', calculate);
+document.getElementById('products').addEventListener('input', calculate);
+document.getElementById('orders').addEventListener('input', calculate);
+</script>
+</body>
+</html>

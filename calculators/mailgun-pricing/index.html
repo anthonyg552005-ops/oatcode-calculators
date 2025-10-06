@@ -30,4 +30,12 @@
     "ratingValue": "4.8",
     "ratingCount": "127"
   }
-}</script></head><body><div class="container"><div class="header"><h1>📮 Mailgun Pricing Calculator</h1></div><div class="calculator-card"><div class="input-group"><label>Emails per Month</label><input type="number" id="emails" value="50000" min="0"></div><button class="calculate-btn" onclick="calc()">Calculate Cost</button><div class="result" id="result"></div></div></div><script>function calc(){const emails=parseInt(document.getElementById('emails').value)||0;let monthly=35;if(emails<=50000)monthly=35;else monthly=35+(Math.ceil((emails-50000)/10000)*0.80);document.getElementById('result').innerHTML=`<h3>Mailgun Cost</h3><div class="plan-details"><p><strong>Emails/month:</strong> ${emails.toLocaleString()}</p><p><strong>Monthly:</strong> $${monthly.toFixed(2)}</p><p><strong>Rate:</strong> $0.80 per 1,000 emails</p></div>`;document.getElementById('result').classList.add('show')}window.addEventListener('load',calc);</script></body></html>
+}</script><!-- Google Analytics (User: Replace G-XXXXXXXXXX with your GA4 Measurement ID) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXXXXX');
+</script>
+</head><body><div class="container"><div class="header"><h1>📮 Mailgun Pricing Calculator</h1></div><div class="calculator-card"><div class="input-group"><label>Emails per Month</label><input type="number" id="emails" value="50000" min="0"></div><button class="calculate-btn" onclick="calc()">Calculate Cost</button><div class="result" id="result"></div></div></div><script>function calc(){const emails=parseInt(document.getElementById('emails').value)||0;let monthly=35;if(emails<=50000)monthly=35;else monthly=35+(Math.ceil((emails-50000)/10000)*0.80);document.getElementById('result').innerHTML=`<h3>Mailgun Cost</h3><div class="plan-details"><p><strong>Emails/month:</strong> ${emails.toLocaleString()}</p><p><strong>Monthly:</strong> $${monthly.toFixed(2)}</p><p><strong>Rate:</strong> $0.80 per 1,000 emails</p></div>`;document.getElementById('result').classList.add('show')}window.addEventListener('load',calc);</script></body></html>

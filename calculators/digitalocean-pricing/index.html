@@ -30,4 +30,12 @@
     "ratingValue": "4.8",
     "ratingCount": "127"
   }
-}</script></head><body><div class="container"><div class="header"><h1>🌊 DigitalOcean Pricing Calculator</h1></div><div class="calculator-card"><div class="input-group"><label>Droplet Size</label><select id="plan"><option value="6">Basic (1GB RAM, $6/month)</option><option value="12">Basic (2GB RAM, $12/month)</option><option value="24">Basic (4GB RAM, $24/month)</option><option value="48">Basic (8GB RAM, $48/month)</option><option value="72">Premium (2GB RAM, $72/month)</option><option value="144">Premium (4GB RAM, $144/month)</option></select></div><button class="calculate-btn" onclick="calc()">Calculate Cost</button><div class="result" id="result"></div></div></div><script>function calc(){const monthly=parseFloat(document.getElementById('plan').value);document.getElementById('result').innerHTML=`<h3>DigitalOcean Cost</h3><div class="plan-details"><p><strong>Monthly:</strong> $${monthly}</p><p><strong>Annual:</strong> $${(monthly*12).toFixed(2)}</p></div>`;document.getElementById('result').classList.add('show')}window.addEventListener('load',calc);</script></body></html>
+}</script><!-- Google Analytics (User: Replace G-XXXXXXXXXX with your GA4 Measurement ID) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXXXXX');
+</script>
+</head><body><div class="container"><div class="header"><h1>🌊 DigitalOcean Pricing Calculator</h1></div><div class="calculator-card"><div class="input-group"><label>Droplet Size</label><select id="plan"><option value="6">Basic (1GB RAM, $6/month)</option><option value="12">Basic (2GB RAM, $12/month)</option><option value="24">Basic (4GB RAM, $24/month)</option><option value="48">Basic (8GB RAM, $48/month)</option><option value="72">Premium (2GB RAM, $72/month)</option><option value="144">Premium (4GB RAM, $144/month)</option></select></div><button class="calculate-btn" onclick="calc()">Calculate Cost</button><div class="result" id="result"></div></div></div><script>function calc(){const monthly=parseFloat(document.getElementById('plan').value);document.getElementById('result').innerHTML=`<h3>DigitalOcean Cost</h3><div class="plan-details"><p><strong>Monthly:</strong> $${monthly}</p><p><strong>Annual:</strong> $${(monthly*12).toFixed(2)}</p></div>`;document.getElementById('result').classList.add('show')}window.addEventListener('load',calc);</script></body></html>

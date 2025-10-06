@@ -30,4 +30,12 @@
     "ratingValue": "4.8",
     "ratingCount": "127"
   }
-}</script></head><body><div class="container"><div class="header"><h1>🎯 Tailwind Pricing Calculator</h1></div><div class="calculator-card"><div class="input-group"><label>Plan Type</label><select id="plan"><option value="0">Free (20 posts)</option><option value="14.99">Pro ($14.99/month)</option><option value="24.99">Advanced ($24.99/month)</option><option value="39.99">Max ($39.99/month)</option></select></div><button class="calculate-btn" onclick="calc()">Calculate Cost</button><div class="result" id="result"></div></div></div><script>function calc(){const price=parseFloat(document.getElementById('plan').value);const users=parseInt(document.getElementById('users').value)||0;const monthly=price;document.getElementById('result').innerHTML=`<h3>Monthly Cost</h3><div class="plan-details"><p><strong>Monthly:</strong> $${monthly.toFixed(2)}</p><p><strong>Annual:</strong> $${(monthly*12).toFixed(2)}</p></div>`;document.getElementById('result').classList.add('show')}window.addEventListener('load',calc);</script></body></html>
+}</script><!-- Google Analytics (User: Replace G-XXXXXXXXXX with your GA4 Measurement ID) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXXXXX');
+</script>
+</head><body><div class="container"><div class="header"><h1>🎯 Tailwind Pricing Calculator</h1></div><div class="calculator-card"><div class="input-group"><label>Plan Type</label><select id="plan"><option value="0">Free (20 posts)</option><option value="14.99">Pro ($14.99/month)</option><option value="24.99">Advanced ($24.99/month)</option><option value="39.99">Max ($39.99/month)</option></select></div><button class="calculate-btn" onclick="calc()">Calculate Cost</button><div class="result" id="result"></div></div></div><script>function calc(){const price=parseFloat(document.getElementById('plan').value);const users=parseInt(document.getElementById('users').value)||0;const monthly=price;document.getElementById('result').innerHTML=`<h3>Monthly Cost</h3><div class="plan-details"><p><strong>Monthly:</strong> $${monthly.toFixed(2)}</p><p><strong>Annual:</strong> $${(monthly*12).toFixed(2)}</p></div>`;document.getElementById('result').classList.add('show')}window.addEventListener('load',calc);</script></body></html>

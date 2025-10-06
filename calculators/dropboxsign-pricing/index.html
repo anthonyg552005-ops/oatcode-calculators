@@ -30,4 +30,12 @@
     "ratingValue": "4.8",
     "ratingCount": "127"
   }
-}</script></head><body><div class="container"><div class="header"><h1>📦 Dropbox Sign Pricing Calculator</h1></div><div class="calculator-card"><div class="input-group"><label>Plan Type</label><select id="plan"><option value="0">Free (3 docs/month)</option><option value="20">Essentials ($20/month)</option><option value="40">Standard ($40/month)</option><option value="60">Premium ($60/month)</option></select></div><button class="calculate-btn" onclick="calc()">Calculate Cost</button><div class="result" id="result"></div></div></div><script>function calc(){const monthly=parseFloat(document.getElementById('plan').value);document.getElementById('result').innerHTML=`<h3>Dropbox Sign Cost</h3><div class="plan-details"><p><strong>Monthly:</strong> $${monthly}</p><p><strong>Annual:</strong> $${(monthly*12*0.9).toFixed(2)} (10% off)</p></div>`;document.getElementById('result').classList.add('show')}window.addEventListener('load',calc);</script></body></html>
+}</script><!-- Google Analytics (User: Replace G-XXXXXXXXXX with your GA4 Measurement ID) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXXXXX');
+</script>
+</head><body><div class="container"><div class="header"><h1>📦 Dropbox Sign Pricing Calculator</h1></div><div class="calculator-card"><div class="input-group"><label>Plan Type</label><select id="plan"><option value="0">Free (3 docs/month)</option><option value="20">Essentials ($20/month)</option><option value="40">Standard ($40/month)</option><option value="60">Premium ($60/month)</option></select></div><button class="calculate-btn" onclick="calc()">Calculate Cost</button><div class="result" id="result"></div></div></div><script>function calc(){const monthly=parseFloat(document.getElementById('plan').value);document.getElementById('result').innerHTML=`<h3>Dropbox Sign Cost</h3><div class="plan-details"><p><strong>Monthly:</strong> $${monthly}</p><p><strong>Annual:</strong> $${(monthly*12*0.9).toFixed(2)} (10% off)</p></div>`;document.getElementById('result').classList.add('show')}window.addEventListener('load',calc);</script></body></html>

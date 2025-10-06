@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Compare Slack vs Microsoft Teams vs Zoom pricing. Free calculator showing per-user costs for team collaboration. Find the best chat platform for your team size and budget.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Slack vs Microsoft Teams vs Zoom Pricing Comparison | OatCode">
+<meta property="og:description" content="Compare Slack vs Microsoft Teams vs Zoom pricing. Free calculator showing per-user costs for team collaboration.">
+<meta property="og:url" content="https://oatcode.com/comparisons/slack-vs-teams-vs-zoom/">
+<meta property="og:image" content="https://oatcode.com/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<title>Slack vs Microsoft Teams vs Zoom Pricing Comparison | OatCode</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
+.container { max-width: 1200px; margin: 0 auto; }
+.header { text-align: center; color: white; margin-bottom: 30px; }
+.header h1 { font-size: 2.5rem; margin-bottom: 15px; }
+.header p { font-size: 1.2rem; opacity: 0.95; }
+.calculator-card { background: white; border-radius: 20px; padding: 40px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); margin-bottom: 30px; }
+.input-group { margin-bottom: 20px; }
+.input-group label { display: block; font-weight: 600; margin-bottom: 8px; color: #333; }
+.input-group input, .input-group select { width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 16px; }
+.comparison-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 30px; }
+.platform-card { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); padding: 25px; border-radius: 12px; color: white; }
+.platform-card h3 { font-size: 1.8rem; margin-bottom: 15px; }
+.cost-detail { background: rgba(255,255,255,0.2); padding: 15px; border-radius: 8px; margin-bottom: 10px; }
+.winner-badge { background: #2ecc71; padding: 8px 15px; border-radius: 20px; font-weight: 600; display: inline-block; margin-bottom: 15px; font-size: 14px; }
+.info-section { margin-top: 40px; padding: 30px; background: #f8f9fa; border-radius: 12px; }
+.info-section h2 { color: #667eea; margin-bottom: 20px; }
+.cta-link { display: inline-block; padding: 12px 24px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; text-decoration: none; border-radius: 8px; font-weight: 600; margin: 10px 10px 0 0; }
+</style>
+<!-- Google Analytics (User: Replace G-XXXXXXXXXX with your GA4 Measurement ID) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXXXXX');
+</script>
+</head>
+<body>
+<div class="container">
+<div class="header">
+<h1>💬 Slack vs Teams vs Zoom</h1>
+<p>Compare pricing for team collaboration platforms</p>
+</div>
+
+<div class="calculator-card">
+<h2 style="margin-bottom: 20px;">Your Team Details</h2>
+<div class="input-group">
+<label>Number of Team Members</label>
+<input type="number" id="users" value="25" min="1">
+</div>
+<div class="input-group">
+<label>Primary Use Case</label>
+<select id="useCase">
+<option value="chat">Team Chat</option>
+<option value="video">Video Meetings</option>
+<option value="both">Chat + Video</option>
+</select>
+</div>
+<div id="results" class="comparison-grid"></div>
+</div>
+
+<div class="info-section">
+<h2>Platform Comparison</h2>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 20px;">
+<div>
+<h3 style="color: #667eea; margin-bottom: 10px;">Slack</h3>
+<ul style="margin-left: 20px; line-height: 1.8;">
+<li>Best-in-class chat interface</li>
+<li>10,000+ app integrations</li>
+<li>Free: 90-day message history</li>
+<li>Pro: $7.25/user/month</li>
+<li>Limited video (15 min on free)</li>
+</ul>
+</div>
+<div>
+<h3 style="color: #667eea; margin-bottom: 10px;">Microsoft Teams</h3>
+<ul style="margin-left: 20px; line-height: 1.8;">
+<li>Part of Microsoft 365</li>
+<li>Unlimited chat history</li>
+<li>Best Office integration</li>
+<li>Free: 60-min meetings</li>
+<li>Paid: $4-57/user/month</li>
+</ul>
+</div>
+<div>
+<h3 style="color: #667eea; margin-bottom: 10px;">Zoom</h3>
+<ul style="margin-left: 20px; line-height: 1.8;">
+<li>Best video quality</li>
+<li>Limited chat features</li>
+<li>Free: 40-min group meetings</li>
+<li>Pro: $14.99/user/month</li>
+<li>Up to 1,000 participants</li>
+</ul>
+</div>
+</div>
+<div style="margin-top: 20px;">
+<a href="/calculators/slack-pricing/" class="cta-link">Slack Calculator →</a>
+<a href="/calculators/zoom-pricing/" class="cta-link">Zoom Calculator →</a>
+<a href="/" class="cta-link">View All Calculators →</a>
+</div>
+</div>
+</div>
+
+<script>
+function calculate() {
+    const users = parseInt(document.getElementById('users').value) || 0;
+    const useCase = document.getElementById('useCase').value;
+
+    // Slack
+    const slackFree = 0;
+    const slackPro = users * 7.25;
+
+    // Microsoft Teams (part of M365)
+    const teamsFree = 0;
+    const teamsEssentials = users * 4;
+    const teamsBusinessBasic = users * 6;
+
+    // Zoom
+    const zoomFree = 0;
+    const zoomPro = users * 14.99;
+
+    const results = [
+        {
+            name: 'Slack',
+            plan: users > 10 ? 'Pro' : 'Free',
+            cost: users > 10 ? slackPro : slackFree,
+            note: users <= 10 ? '90-day history, 15-min video' : 'Unlimited history, screen sharing'
+        },
+        {
+            name: 'Microsoft Teams',
+            plan: users > 10 ? 'Business Basic' : 'Free',
+            cost: users > 10 ? teamsBusinessBasic : teamsFree,
+            note: users <= 10 ? '60-min meetings, 10GB storage' : 'Full Office 365 integration'
+        },
+        {
+            name: 'Zoom',
+            plan: useCase === 'video' || useCase === 'both' ? 'Pro' : 'Free',
+            cost: (useCase === 'video' || useCase === 'both') ? zoomPro : zoomFree,
+            note: useCase === 'video' || useCase === 'both' ? 'Unlimited meetings, cloud recording' : '40-min limit on groups'
+        }
+    ];
+
+    const winner = results.reduce((min, r) => r.cost < min.cost ? r : min);
+
+    const html = results.map(r => `
+        <div class="platform-card">
+            ${r.name === winner.name && r.cost > 0 ? '<div class="winner-badge">🏆 Best Value</div>' : ''}
+            <h3>${r.name}</h3>
+            <div class="cost-detail">
+                <strong>Plan: ${r.plan}</strong>
+                ${r.cost === 0 ? 'Free' : `$${r.cost.toFixed(2)}/month`}
+            </div>
+            <div class="cost-detail">
+                <strong>Per User</strong>
+                ${r.cost === 0 ? '$0' : `$${(r.cost / users).toFixed(2)}`}
+            </div>
+            <div class="cost-detail" style="background: rgba(255,255,255,0.4);">
+                <strong>Annual Cost</strong>
+                $${(r.cost * 12).toFixed(2)}
+            </div>
+            <div style="margin-top: 15px; font-size: 0.9rem; opacity: 0.9;">
+                ${r.note}
+            </div>
+        </div>
+    `).join('');
+
+    document.getElementById('results').innerHTML = html;
+}
+
+window.addEventListener('load', calculate);
+document.getElementById('users').addEventListener('input', calculate);
+document.getElementById('useCase').addEventListener('change', calculate);
+</script>
+</body>
+</html>

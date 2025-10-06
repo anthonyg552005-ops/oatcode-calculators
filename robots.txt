@@ -4,5 +4,22 @@ Allow: /
 # Sitemap
 Sitemap: https://oatcode.com/sitemap.xml
 
-# Crawl-delay for respectful crawling
-Crawl-delay: 1
+# No crawl delay for Google/Bing (we want fast indexing)
+User-agent: Googlebot
+Crawl-delay: 0
+
+User-agent: Bingbot
+Crawl-delay: 0
+
+# Block SEO crawler bots to save bandwidth
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
