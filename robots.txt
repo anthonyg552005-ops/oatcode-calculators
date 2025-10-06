@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://oatcode.com/sitemap.xml
+
+# Crawl-delay for respectful crawling
+Crawl-delay: 1
