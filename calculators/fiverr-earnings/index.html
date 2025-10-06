@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fiverr Earnings Calculator - Freelance Income Estimator | OatCode</title>
+    <meta name="description" content="Calculate Fiverr earnings after fees. Estimate net income from gigs based on pricing and seller level.">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
+        .container { max-width: 900px; margin: 0 auto; }
+        .header { text-align: center; color: white; margin-bottom: 30px; }
+        .header h1 { font-size: 2.5rem; margin-bottom: 10px; }
+        .calculator-card { background: white; border-radius: 20px; padding: 40px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); margin-bottom: 30px; }
+        .input-group { margin-bottom: 25px; }
+        .input-group label { display: block; font-weight: 600; margin-bottom: 8px; }
+        .input-group input, .input-group select { width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 16px; }
+        .calculate-btn { width: 100%; padding: 15px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 8px; font-size: 18px; font-weight: 600; cursor: pointer; }
+        .result { margin-top: 30px; padding: 25px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); border-radius: 12px; color: white; display: none; }
+        .result.show { display: block; }
+        .result h3 { font-size: 1.8rem; margin-bottom: 15px; }
+        .plan-details { background: rgba(255,255,255,0.2); padding: 15px; border-radius: 8px; margin-top: 15px; }
+        .tips { background: #f8f9fa; padding: 25px; border-radius: 12px; margin-top: 20px; }
+        .tips h4 { color: #667eea; margin-bottom: 15px; }
+        .affiliate-section { margin-top: 30px; padding: 25px; background: #fff5f5; border-radius: 12px; }
+        .affiliate-links { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 15px; }
+        .affiliate-link { display: block; padding: 12px 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; text-decoration: none; border-radius: 8px; text-align: center; font-weight: 600; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>💼 Fiverr Earnings Calculator</h1>
+            <p>Calculate freelance income after fees</p>
+        </div>
+        <div class="calculator-card">
+            <div class="input-group">
+                <label for="gigPrice">Gig Price ($)</label>
+                <input type="number" id="gigPrice" min="5" value="50" placeholder="e.g., 50">
+            </div>
+            <div class="input-group">
+                <label for="orders">Monthly Orders</label>
+                <input type="number" id="orders" min="1" value="10" placeholder="e.g., 10">
+            </div>
+            <div class="input-group">
+                <label for="level">Seller Level</label>
+                <select id="level">
+                    <option value="new">New Seller (20% fee)</option>
+                    <option value="level1">Level 1 (20% fee)</option>
+                    <option value="level2">Level 2 (20% fee)</option>
+                    <option value="top">Top Rated (20% fee)</option>
+                </select>
+            </div>
+            <button class="calculate-btn" onclick="calc()">Calculate Earnings</button>
+            <div class="result" id="result"></div>
+        </div>
+        <div class="tips">
+            <h4>💡 Fiverr Fee Structure</h4>
+            <ul>
+                <li><strong>Service Fee:</strong> Fiverr takes 20% from all seller earnings</li>
+                <li><strong>Payment Processing:</strong> $1 withdrawal fee for amounts under $100</li>
+                <li><strong>Tips:</strong> Keep 100% of tips (no fee taken)</li>
+                <li><strong>Gig Extras:</strong> Increase earnings with package upgrades</li>
+            </ul>
+        </div>
+        <div class="affiliate-section">
+            <h4>🚀 Freelance Platforms</h4>
+            <div class="affiliate-links">
+                <a href="https://www.fiverr.com" target="_blank" class="affiliate-link">Join Fiverr</a>
+                <a href="https://www.upwork.com" target="_blank" class="affiliate-link">Try Upwork</a>
+                <a href="https://www.freelancer.com" target="_blank" class="affiliate-link">Try Freelancer</a>
+            </div>
+        </div>
+    </div>
+    <script>
+        function calc() {
+            const gigPrice = parseFloat(document.getElementById('gigPrice').value) || 0;
+            const orders = parseInt(document.getElementById('orders').value) || 0;
+
+            const fiverrFee = 0.20;
+            const grossRevenue = gigPrice * orders;
+            const fees = grossRevenue * fiverrFee;
+            const netEarnings = grossRevenue - fees;
+
+            document.getElementById('result').innerHTML = `
+                <h3>Monthly Fiverr Earnings</h3>
+                <div class="plan-details">
+                    <p><strong>Gross Revenue:</strong> $${grossRevenue.toFixed(2)}</p>
+                    <p><strong>Fiverr Fees (20%):</strong> -$${fees.toFixed(2)}</p>
+                    <p><strong>Net Earnings:</strong> $${netEarnings.toFixed(2)}</p>
+                    <p style="margin-top: 15px;"><strong>Per Order:</strong></p>
+                    <p>You earn: $${(gigPrice * 0.8).toFixed(2)} (Fiverr takes: $${(gigPrice * 0.2).toFixed(2)})</p>
+                    <p style="margin-top: 15px;"><strong>Annual Projection:</strong> $${(netEarnings * 12).toFixed(2)}</p>
+                </div>
+            `;
+            document.getElementById('result').classList.add('show');
+        }
+        window.addEventListener('load', calc);
+    </script>
+</body>
+</html>

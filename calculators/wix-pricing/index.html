@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wix Pricing Calculator - Website Builder Cost Estimator | OatCode</title>
+    <meta name="description" content="Calculate Wix pricing for websites. Compare Combo, Unlimited, Pro, VIP, and Business plans based on your website needs.">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
+        .container { max-width: 900px; margin: 0 auto; }
+        .header { text-align: center; color: white; margin-bottom: 30px; }
+        .header h1 { font-size: 2.5rem; margin-bottom: 10px; }
+        .calculator-card { background: white; border-radius: 20px; padding: 40px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); margin-bottom: 30px; }
+        .input-group { margin-bottom: 25px; }
+        .input-group label { display: block; font-weight: 600; margin-bottom: 8px; }
+        .input-group select { width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 16px; }
+        .calculate-btn { width: 100%; padding: 15px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 8px; font-size: 18px; font-weight: 600; cursor: pointer; }
+        .result { margin-top: 30px; padding: 25px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); border-radius: 12px; color: white; display: none; }
+        .result.show { display: block; }
+        .result h3 { font-size: 1.8rem; margin-bottom: 15px; }
+        .plan-details { background: rgba(255,255,255,0.2); padding: 15px; border-radius: 8px; margin-top: 15px; }
+        .tips { background: #f8f9fa; padding: 25px; border-radius: 12px; margin-top: 20px; }
+        .tips h4 { color: #667eea; margin-bottom: 15px; }
+        .affiliate-section { margin-top: 30px; padding: 25px; background: #fff5f5; border-radius: 12px; }
+        .affiliate-links { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 15px; }
+        .affiliate-link { display: block; padding: 12px 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; text-decoration: none; border-radius: 8px; text-align: center; font-weight: 600; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌐 Wix Pricing Calculator</h1>
+            <p>Website builder cost estimator</p>
+        </div>
+        <div class="calculator-card">
+            <div class="input-group">
+                <label for="siteType">Website Type</label>
+                <select id="siteType">
+                    <option value="personal">Personal/Blog</option>
+                    <option value="business">Business/Professional</option>
+                    <option value="ecommerce">E-commerce Store</option>
+                </select>
+            </div>
+            <button class="calculate-btn" onclick="calc()">Calculate Pricing</button>
+            <div class="result" id="result"></div>
+        </div>
+        <div class="tips">
+            <h4>💡 Wix Pricing Tips</h4>
+            <ul>
+                <li><strong>Combo ($16/month):</strong> Remove ads, connect domain, 3GB storage.</li>
+                <li><strong>Unlimited ($22/month):</strong> 10GB storage, unlimited bandwidth, visitor analytics.</li>
+                <li><strong>Pro ($27/month):</strong> 20GB storage, professional logo, social posts.</li>
+                <li><strong>VIP ($45/month):</strong> 35GB storage, priority support, professional review.</li>
+                <li><strong>Business ($27/month):</strong> Accept online payments, e-commerce features.</li>
+            </ul>
+        </div>
+        <div class="affiliate-section">
+            <h4>🚀 Website Builders</h4>
+            <div class="affiliate-links">
+                <a href="https://www.wix.com" target="_blank" class="affiliate-link">Try Wix</a>
+                <a href="https://www.squarespace.com" target="_blank" class="affiliate-link">Try Squarespace</a>
+                <a href="https://www.webflow.com" target="_blank" class="affiliate-link">Try Webflow</a>
+            </div>
+        </div>
+    </div>
+    <script>
+        function calc() {
+            const siteType = document.getElementById('siteType').value;
+            let plan, monthly, features;
+
+            if (siteType === 'ecommerce') {
+                plan = 'Business Basic';
+                monthly = 27;
+                features = ['Accept payments', 'E-commerce features', '20GB storage', 'Custom domain', 'Remove ads'];
+            } else if (siteType === 'business') {
+                plan = 'Pro';
+                monthly = 27;
+                features = ['20GB storage', 'Professional logo', 'Social media posts', 'Visitor analytics', 'Priority support'];
+            } else {
+                plan = 'Combo';
+                monthly = 16;
+                features = ['Connect domain', '3GB storage', 'Remove Wix ads', '30-min video hours', 'Free SSL'];
+            }
+
+            document.getElementById('result').innerHTML = `
+                <h3>Recommended: Wix ${plan}</h3>
+                <p>Best for ${siteType} websites.</p>
+                <div class="plan-details">
+                    <p><strong>Monthly Cost:</strong> $${monthly}</p>
+                    <p><strong>Annual Cost:</strong> $${monthly * 12}</p>
+                    <p style="margin-top: 15px;"><strong>Features:</strong></p>
+                    <ul style="margin-left: 20px;">${features.map(f => `<li>${f}</li>`).join('')}</ul>
+                </div>
+            `;
+            document.getElementById('result').classList.add('show');
+        }
+        window.addEventListener('load', calc);
+    </script>
+</body>
+</html>
