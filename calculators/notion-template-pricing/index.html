@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notion Template Pricing Calculator - How Much to Charge | OatCode</title>
+    <meta name="description" content="Calculate the optimal price for your Notion templates. Get recommended pricing based on complexity, features, target audience, and market competition.">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366F1;
+            --secondary: #EC4899;
+            --dark: #0F172A;
+            --light: #F8FAFC;
+            --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --notion-black: #000000;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: var(--light);
+        }
+
+        nav {
+            background: white;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            padding: 20px 0;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 900;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+
+        .breadcrumb {
+            color: #64748B;
+            font-size: 14px;
+        }
+
+        .breadcrumb a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .header {
+            background: var(--gradient-1);
+            color: white;
+            padding: 60px 40px 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: clamp(28px, 5vw, 48px);
+            font-weight: 900;
+            margin-bottom: 16px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 40px;
+        }
+
+        .calculator-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .calculator-box {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 4px 30px rgba(0,0,0,0.1);
+        }
+
+        .calc-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            color: var(--dark);
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--dark);
+        }
+
+        select, input {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid #E2E8F0;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        select:focus, input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .calculate-btn {
+            width: 100%;
+            padding: 16px;
+            background: var(--gradient-1);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .results {
+            padding: 32px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 16px;
+            color: white;
+        }
+
+        .result-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 16px;
+        }
+
+        .result-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .result-label {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-bottom: 4px;
+        }
+
+        .result-value {
+            font-size: 32px;
+            font-weight: 900;
+        }
+
+        .result-detail {
+            font-size: 14px;
+            opacity: 0.8;
+            margin-top: 8px;
+        }
+
+        .content-section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .content-section h2 {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 24px;
+            color: var(--dark);
+        }
+
+        .content-section h3 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-top: 32px;
+            margin-bottom: 16px;
+            color: var(--dark);
+        }
+
+        .content-section p {
+            color: #475569;
+            margin-bottom: 16px;
+            line-height: 1.8;
+        }
+
+        .content-section ul {
+            margin-left: 24px;
+            margin-bottom: 16px;
+        }
+
+        .content-section li {
+            margin-bottom: 8px;
+            color: #475569;
+        }
+
+        @media (max-width: 768px) {
+            .calculator-wrapper {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                padding: 40px 20px;
+            }
+
+            .calculator-box, .content-section {
+                padding: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="/" class="logo">OatCode</a>
+            <div class="breadcrumb">
+                <a href="/">Home</a> ›
+                <a href="/calculators">Calculators</a> ›
+                Notion Template Pricing
+            </div>
+        </div>
+    </nav>
+
+    <div class="header">
+        <h1>📋 Notion Template Pricing Calculator</h1>
+        <p>Calculate the optimal price for your Notion templates</p>
+    </div>
+
+    <div class="container">
+        <div class="calculator-wrapper">
+            <div class="calculator-box">
+                <h2 class="calc-title">Template Details</h2>
+
+                <div class="form-group">
+                    <label for="complexity">Template Complexity</label>
+                    <select id="complexity">
+                        <option value="simple">Simple (Single page, basic setup)</option>
+                        <option value="moderate" selected>Moderate (Multi-page, some automation)</option>
+                        <option value="complex">Complex (Advanced databases, formulas, automations)</option>
+                        <option value="pro">Pro (Complete system, integrations, unique features)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="category">Template Category</label>
+                    <select id="category">
+                        <option value="productivity">Productivity & Task Management</option>
+                        <option value="business">Business & Finance</option>
+                        <option value="creator">Content Creator & Social Media</option>
+                        <option value="student">Student & Education</option>
+                        <option value="life">Life & Personal Organization</option>
+                        <option value="professional">Professional & Career</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="features">Number of Features</label>
+                    <input type="number" id="features" value="5" min="1" max="50">
+                    <small style="color: #64748B;">Databases, views, automations, formulas, etc.</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="support">Support Included?</label>
+                    <select id="support">
+                        <option value="no">No support</option>
+                        <option value="basic" selected>Basic (Email support, 30 days)</option>
+                        <option value="premium">Premium (Priority support, lifetime updates)</option>
+                    </select>
+                </div>
+
+                <button class="calculate-btn" onclick="calculatePrice()">Calculate Recommended Price</button>
+            </div>
+
+            <div class="calculator-box">
+                <div class="results">
+                    <div class="result-item">
+                        <div class="result-label">Recommended Price</div>
+                        <div class="result-value" id="recommendedPrice">$0</div>
+                        <div class="result-detail" id="priceRange">Calculate to see pricing</div>
+                    </div>
+
+                    <div class="result-item">
+                        <div class="result-label">Pricing Strategy</div>
+                        <div class="result-detail" id="strategy">-</div>
+                    </div>
+
+                    <div class="result-item">
+                        <div class="result-label">Potential Monthly Earnings</div>
+                        <div class="result-value" id="monthlyEarnings">$0</div>
+                        <div class="result-detail" id="earningsDetail">Based on average sales volume</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>How to Price Your Notion Templates</h2>
+            <p>
+                Pricing your Notion templates correctly is crucial for maximizing revenue while remaining competitive.
+                The right price balances the value you provide with what your target audience is willing to pay.
+            </p>
+
+            <h3>Factors That Affect Template Pricing</h3>
+            <ul>
+                <li><strong>Complexity:</strong> More databases, views, and automations = higher value</li>
+                <li><strong>Target Audience:</strong> Business professionals pay more than students</li>
+                <li><strong>Uniqueness:</strong> Novel solutions command premium pricing</li>
+                <li><strong>Support & Updates:</strong> Ongoing support justifies higher prices</li>
+                <li><strong>Competition:</strong> Research similar templates on Gumroad, Etsy, Notion marketplace</li>
+            </ul>
+
+            <h3>Notion Template Pricing Tiers</h3>
+            <p><strong>$5-15:</strong> Simple templates (habit trackers, reading lists, basic dashboards)</p>
+            <p><strong>$15-35:</strong> Moderate templates (content planners, project management, CRM systems)</p>
+            <p><strong>$35-75:</strong> Complex templates (business OS, complete productivity systems, financial trackers)</p>
+            <p><strong>$75-200+:</strong> Pro templates (agency systems, advanced automations, niche professional tools)</p>
+
+            <h3>How to Increase Template Value</h3>
+            <ul>
+                <li>Add video tutorials showing how to use the template</li>
+                <li>Include setup guides and documentation</li>
+                <li>Offer customization service for premium price tier</li>
+                <li>Provide lifetime updates and new features</li>
+                <li>Create community (Discord/Slack) for template users</li>
+                <li>Bundle multiple templates together</li>
+            </ul>
+        </div>
+
+        <!-- Affiliate Recommendations -->
+        <div class="content-section">
+            <h2>🚀 Recommended Tools for Template Creators</h2>
+            <p style="margin-bottom: 24px;">Build and sell better Notion templates with these tools:</p>
+
+            <div style="display: grid; gap: 20px;">
+                <div style="padding: 24px; border: 2px solid #E2E8F0; border-radius: 12px;">
+                    <h3 style="margin-bottom: 8px;">Notion</h3>
+                    <p style="color: #64748B; margin-bottom: 16px;">The platform itself. Free for personal use, $10/month for Pro features (required for many templates).</p>
+                    <a href="https://www.notion.so" target="_blank" rel="noopener" style="color: var(--primary); text-decoration: none; font-weight: 600;">
+                        Get Notion Free →
+                    </a>
+                </div>
+
+                <div style="padding: 24px; border: 2px solid #E2E8F0; border-radius: 12px;">
+                    <h3 style="margin-bottom: 8px;">Gumroad</h3>
+                    <p style="color: #64748B; margin-bottom: 16px;">Best platform to sell Notion templates. Simple setup, automatic delivery, 10% fee. Most Notion creators use this.</p>
+                    <a href="https://gumroad.com" target="_blank" rel="noopener" style="color: var(--primary); text-decoration: none; font-weight: 600;">
+                        Start Selling on Gumroad →
+                    </a>
+                </div>
+
+                <div style="padding: 24px; border: 2px solid #E2E8F0; border-radius: 12px;">
+                    <h3 style="margin-bottom: 8px;">Etsy</h3>
+                    <p style="color: #64748B; margin-bottom: 16px;">Alternative marketplace with built-in traffic. Good for reaching customers who don't know about Gumroad.</p>
+                    <a href="https://www.etsy.com/sell" target="_blank" rel="noopener" style="color: var(--primary); text-decoration: none; font-weight: 600;">
+                        Sell on Etsy →
+                    </a>
+                </div>
+
+                <div style="padding: 24px; border: 2px solid #E2E8F0; border-radius: 12px;">
+                    <h3 style="margin-bottom: 8px;">Canva Pro</h3>
+                    <p style="color: #64748B; margin-bottom: 16px;">Create beautiful preview images and marketing graphics for your templates. $12.99/month.</p>
+                    <a href="https://www.canva.com/pro" target="_blank" rel="noopener" style="color: var(--primary); text-decoration: none; font-weight: 600;">
+                        Try Canva Pro Free →
+                    </a>
+                </div>
+
+                <div style="padding: 24px; border: 2px solid #E2E8F0; border-radius: 12px;">
+                    <h3 style="margin-bottom: 8px;">Loom</h3>
+                    <p style="color: #64748B; margin-bottom: 16px;">Record quick video tutorials for your templates. Free plan available, Pro is $12.50/month.</p>
+                    <a href="https://www.loom.com" target="_blank" rel="noopener" style="color: var(--primary); text-decoration: none; font-weight: 600;">
+                        Get Loom Free →
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>Example Template Pricing</h2>
+
+            <h3>Simple Habit Tracker - $9</h3>
+            <p><strong>Why $9:</strong> Single database, basic views, quick setup. Beginner-friendly price point.</p>
+
+            <h3>Content Creator Dashboard - $29</h3>
+            <p><strong>Why $29:</strong> Multiple databases (content calendar, analytics, ideas), custom views, automations. Targets creators willing to invest in productivity.</p>
+
+            <h3>Complete Business OS - $97</h3>
+            <p><strong>Why $97:</strong> Full workspace with CRM, project management, finance tracking, team collaboration. Premium price for business customers.</p>
+
+            <h3>Agency Management System - $197</h3>
+            <p><strong>Why $197:</strong> Professional-grade system with client management, invoicing integration, advanced automations. Includes setup support and lifetime updates.</p>
+        </div>
+
+        <div class="content-section" style="text-align: center; background: var(--gradient-1); color: white;">
+            <h2 style="color: white; margin-bottom: 16px;">Need a Professional Website?</h2>
+            <p style="color: rgba(255,255,255,0.9); margin-bottom: 24px;">
+                OatCode builds AI-powered websites for Notion template creators, designers, and digital product sellers.
+            </p>
+            <a href="/" style="display: inline-block; background: white; color: var(--primary); padding: 16px 40px; border-radius: 50px; text-decoration: none; font-weight: 700;">
+                Learn More →
+            </a>
+        </div>
+    </div>
+
+    <script>
+        function calculatePrice() {
+            const complexity = document.getElementById('complexity').value;
+            const category = document.getElementById('category').value;
+            const features = parseInt(document.getElementById('features').value);
+            const support = document.getElementById('support').value;
+
+            // Base prices by complexity
+            const basePrices = {
+                simple: 12,
+                moderate: 25,
+                complex: 50,
+                pro: 90
+            };
+
+            // Category multipliers
+            const categoryMultipliers = {
+                productivity: 1.0,
+                business: 1.3,
+                creator: 1.1,
+                student: 0.7,
+                life: 0.9,
+                professional: 1.4
+            };
+
+            // Support add-ons
+            const supportPricing = {
+                no: 0,
+                basic: 10,
+                premium: 25
+            };
+
+            // Calculate base price
+            let basePrice = basePrices[complexity];
+
+            // Add feature premium ($2 per feature over 3)
+            if (features > 3) {
+                basePrice += (features - 3) * 2;
+            }
+
+            // Apply category multiplier
+            basePrice *= categoryMultipliers[category];
+
+            // Add support
+            basePrice += supportPricing[support];
+
+            // Round to nearest $5
+            const recommendedPrice = Math.round(basePrice / 5) * 5;
+
+            // Calculate range (±20%)
+            const minPrice = Math.round(recommendedPrice * 0.8);
+            const maxPrice = Math.round(recommendedPrice * 1.2);
+
+            // Calculate potential monthly earnings (rough estimate)
+            // Based on average sales: Simple=15/mo, Moderate=8/mo, Complex=4/mo, Pro=2/mo
+            const salesEstimates = {
+                simple: 15,
+                moderate: 8,
+                complex: 4,
+                pro: 2
+            };
+            const monthlySales = salesEstimates[complexity];
+            const monthlyEarnings = recommendedPrice * monthlySales;
+
+            // Update UI
+            document.getElementById('recommendedPrice').textContent = '$' + recommendedPrice;
+            document.getElementById('priceRange').textContent = 'Suggested range: $' + minPrice + ' - $' + maxPrice;
+            document.getElementById('strategy').textContent = getStrategy(recommendedPrice);
+            document.getElementById('monthlyEarnings').textContent = '$' + monthlyEarnings.toLocaleString();
+            document.getElementById('earningsDetail').textContent = `Selling ~${monthlySales} templates per month`;
+        }
+
+        function getStrategy(price) {
+            if (price < 15) {
+                return 'Low-price, high-volume strategy. Focus on beginner market, easy onboarding.';
+            } else if (price < 40) {
+                return 'Mid-tier pricing. Target serious users, emphasize unique features and value.';
+            } else if (price < 80) {
+                return 'Premium pricing. Highlight ROI, include support, target business/professional users.';
+            } else {
+                return 'High-end pricing. Must include extensive support, lifetime updates, and exceptional value.';
+            }
+        }
+
+        // Calculate on page load
+        window.addEventListener('DOMContentLoaded', calculatePrice);
+    </script>
+</body>
+</html>

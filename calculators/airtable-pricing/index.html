@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Airtable Base Pricing Calculator - Find Your Perfect Plan | OatCode</title>
+    <meta name="description" content="Calculate which Airtable plan is right for your team. Compare Free, Plus, Pro, and Enterprise based on records, collaborators, and features needed.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+
+        .content {
+            padding: 50px 40px;
+        }
+
+        .input-group {
+            margin-bottom: 30px;
+        }
+
+        .input-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #2D3748;
+            font-size: 1.1em;
+        }
+
+        .input-group input,
+        .input-group select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #E2E8F0;
+            border-radius: 10px;
+            font-size: 1em;
+            transition: all 0.3s;
+        }
+
+        .input-group input:focus,
+        .input-group select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .checkbox-group {
+            display: grid;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border: 2px solid #E2E8F0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .checkbox-item:hover {
+            border-color: #667eea;
+            background: #F7FAFC;
+        }
+
+        .checkbox-item input {
+            width: auto;
+            margin-right: 12px;
+            cursor: pointer;
+        }
+
+        .checkbox-item label {
+            margin: 0;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .calculate-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .result {
+            margin-top: 40px;
+            padding: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            color: white;
+            display: none;
+        }
+
+        .result.show {
+            display: block;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .result h2 {
+            font-size: 2em;
+            margin-bottom: 15px;
+        }
+
+        .result .price {
+            font-size: 3.5em;
+            font-weight: 700;
+            margin: 20px 0;
+        }
+
+        .result .details {
+            font-size: 1.1em;
+            line-height: 1.8;
+            opacity: 0.95;
+        }
+
+        .plan-comparison {
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 2px solid rgba(255,255,255,0.3);
+        }
+
+        .plan-comparison h3 {
+            font-size: 1.4em;
+            margin-bottom: 15px;
+        }
+
+        .plan-features {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+
+        .plan-features ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .plan-features li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .plan-features li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        .content-section {
+            margin-top: 50px;
+            padding-top: 40px;
+            border-top: 3px solid #E2E8F0;
+        }
+
+        .content-section h2 {
+            color: #2D3748;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .content-section p {
+            color: #4A5568;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            font-size: 1.05em;
+        }
+
+        .affiliate-cards {
+            display: grid;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .affiliate-card {
+            padding: 24px;
+            border: 2px solid #E2E8F0;
+            border-radius: 12px;
+            transition: all 0.3s;
+        }
+
+        .affiliate-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .affiliate-card h3 {
+            color: #2D3748;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+
+        .affiliate-card p {
+            margin-bottom: 15px;
+        }
+
+        .affiliate-card a {
+            display: inline-block;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: transform 0.2s;
+        }
+
+        .affiliate-card a:hover {
+            transform: scale(1.05);
+        }
+
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 25px;
+        }
+
+        .tip-card {
+            padding: 20px;
+            background: #F7FAFC;
+            border-left: 4px solid #667eea;
+            border-radius: 8px;
+        }
+
+        .tip-card h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .tip-card p {
+            color: #4A5568;
+            font-size: 0.95em;
+        }
+
+        .cta-section {
+            margin-top: 50px;
+            padding: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            text-align: center;
+            color: white;
+        }
+
+        .cta-section h2 {
+            font-size: 2em;
+            margin-bottom: 15px;
+        }
+
+        .cta-section p {
+            font-size: 1.2em;
+            margin-bottom: 25px;
+            opacity: 0.95;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            padding: 15px 40px;
+            background: white;
+            color: #667eea;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 1.1em;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 40px 20px;
+            }
+
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .content {
+                padding: 30px 20px;
+            }
+
+            .result .price {
+                font-size: 2.5em;
+            }
+
+            .tips-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>💼 Airtable Base Pricing Calculator</h1>
+            <p>Find the perfect Airtable plan for your team's needs</p>
+        </div>
+
+        <div class="content">
+            <div class="input-group">
+                <label for="records">Number of Records Needed</label>
+                <input type="number" id="records" placeholder="e.g., 5000" min="0" value="1000">
+            </div>
+
+            <div class="input-group">
+                <label for="collaborators">Number of Team Members</label>
+                <input type="number" id="collaborators" placeholder="e.g., 5" min="1" value="3">
+            </div>
+
+            <div class="input-group">
+                <label for="bases">Number of Bases Needed</label>
+                <input type="number" id="bases" placeholder="e.g., 3" min="1" value="1">
+            </div>
+
+            <div class="input-group">
+                <label>Features Required</label>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="automations" value="automations">
+                        <label for="automations">Advanced Automations (5,000+ runs/month)</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="gantt" value="gantt">
+                        <label for="gantt">Gantt & Timeline Views</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="extensions" value="extensions">
+                        <label for="extensions">Extensions & Integrations</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="admin" value="admin">
+                        <label for="admin">Admin Panel & SAML SSO</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="support" value="support">
+                        <label for="support">Priority Support</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="usage">Primary Use Case</label>
+                <select id="usage">
+                    <option value="personal">Personal Projects</option>
+                    <option value="small-team">Small Team (2-5 people)</option>
+                    <option value="growing-team">Growing Team (6-20 people)</option>
+                    <option value="enterprise">Large Enterprise (20+ people)</option>
+                </select>
+            </div>
+
+            <button class="calculate-btn" onclick="calculatePlan()">Calculate Best Plan</button>
+
+            <div class="result" id="result">
+                <h2>Recommended Plan: <span id="planName"></span></h2>
+                <div class="price">$<span id="totalPrice"></span><span style="font-size: 0.4em;">/month</span></div>
+                <div class="details">
+                    <p id="planDetails"></p>
+                    <p style="margin-top: 15px;"><strong>💡 Why this plan?</strong> <span id="reasoning"></span></p>
+                </div>
+                <div class="plan-comparison">
+                    <h3>What's Included:</h3>
+                    <div class="plan-features" id="features"></div>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2>🎯 Airtable Pricing Guide</h2>
+                <p>Choosing the right Airtable plan depends on your team size, the number of records you need to manage, and which advanced features are essential for your workflow.</p>
+
+                <div class="tips-grid">
+                    <div class="tip-card">
+                        <h3>📊 Free Plan</h3>
+                        <p>Perfect for individuals and small projects. Includes unlimited bases with 1,200 records per base and basic features.</p>
+                    </div>
+                    <div class="tip-card">
+                        <h3>💼 Plus Plan ($10/seat)</h3>
+                        <p>Great for small teams needing 5,000 records per base, 5,000 automation runs, and 3-month revision history.</p>
+                    </div>
+                    <div class="tip-card">
+                        <h3>🚀 Pro Plan ($20/seat)</h3>
+                        <p>For growing teams requiring 50,000 records per base, advanced extensions, Gantt views, and priority support.</p>
+                    </div>
+                    <div class="tip-card">
+                        <h3>🏢 Enterprise</h3>
+                        <p>Custom pricing for large organizations needing SAML SSO, advanced admin controls, and dedicated support.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2>🛠️ Recommended Tools for Airtable Power Users</h2>
+                <div class="affiliate-cards">
+                    <div class="affiliate-card">
+                        <h3>Airtable</h3>
+                        <p>Start with a free account and upgrade as you grow. No credit card required to get started.</p>
+                        <a href="https://airtable.com/signup" target="_blank" rel="noopener">Start Free Trial →</a>
+                    </div>
+                    <div class="affiliate-card">
+                        <h3>Zapier</h3>
+                        <p>Automate your Airtable workflows by connecting to 5,000+ apps. Perfect for advanced automation beyond Airtable's native capabilities.</p>
+                        <a href="https://zapier.com" target="_blank" rel="noopener">Try Zapier Free →</a>
+                    </div>
+                    <div class="affiliate-card">
+                        <h3>Make (Integromat)</h3>
+                        <p>Visual automation platform that integrates deeply with Airtable. Great for complex workflows and data transformations.</p>
+                        <a href="https://www.make.com" target="_blank" rel="noopener">Start with Make →</a>
+                    </div>
+                    <div class="affiliate-card">
+                        <h3>Softr</h3>
+                        <p>Build client portals, member sites, and web apps powered by your Airtable bases. No coding required.</p>
+                        <a href="https://softr.io" target="_blank" rel="noopener">Build with Softr →</a>
+                    </div>
+                    <div class="affiliate-card">
+                        <h3>Stacker</h3>
+                        <p>Create custom business apps and portals from your Airtable data. Perfect for customer-facing applications.</p>
+                        <a href="https://stacker.app" target="_blank" rel="noopener">Try Stacker →</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2>💡 Tips for Choosing Your Airtable Plan</h2>
+                <p><strong>Start with Free:</strong> If you're just getting started with Airtable, begin with the free plan to test if it fits your workflow. The 1,200 records per base is enough for many small projects.</p>
+
+                <p><strong>Watch Your Record Count:</strong> The biggest limitation across plans is the number of records per base. If you're managing large datasets (customer lists, inventory, etc.), you'll need Plus (5,000) or Pro (50,000) tier.</p>
+
+                <p><strong>Automation is Key:</strong> Free plans get 100 automation runs/month, Plus gets 5,000, and Pro gets 25,000. If you're automating repetitive tasks, this quickly becomes a bottleneck on lower tiers.</p>
+
+                <p><strong>Consider Per-Seat Pricing:</strong> Airtable charges per user, so a 10-person team on Pro ($20/seat) costs $200/month. Consider if all team members need edit access or if some can be comment-only collaborators (free).</p>
+
+                <p><strong>Annual Billing Saves 20%:</strong> All paid Airtable plans offer ~20% discount when billed annually instead of monthly. Worth it if you're committed long-term.</p>
+            </div>
+
+            <div class="cta-section">
+                <h2>Need More Business Calculators?</h2>
+                <p>Check out our full collection of pricing and revenue calculators for SaaS tools, freelancers, and creators.</p>
+                <a href="https://oatcode.com" class="cta-btn">View All Calculators</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function calculatePlan() {
+            const records = parseInt(document.getElementById('records').value) || 0;
+            const collaborators = parseInt(document.getElementById('collaborators').value) || 1;
+            const bases = parseInt(document.getElementById('bases').value) || 1;
+            const usage = document.getElementById('usage').value;
+
+            const features = {
+                automations: document.getElementById('automations').checked,
+                gantt: document.getElementById('gantt').checked,
+                extensions: document.getElementById('extensions').checked,
+                admin: document.getElementById('admin').checked,
+                support: document.getElementById('support').checked
+            };
+
+            let recommendedPlan = 'Free';
+            let monthlyPrice = 0;
+            let reasoning = '';
+            let planFeatures = [];
+
+            // Determine plan based on requirements
+            if (features.admin || usage === 'enterprise' || collaborators > 20) {
+                recommendedPlan = 'Enterprise';
+                monthlyPrice = 'Custom';
+                reasoning = 'Your organization requires enterprise-grade features like SAML SSO, advanced admin controls, and dedicated support. Contact Airtable sales for custom pricing.';
+                planFeatures = [
+                    'Unlimited records per base',
+                    'Unlimited automation runs',
+                    'SAML-based single sign-on',
+                    'Advanced admin & security controls',
+                    'Dedicated account manager',
+                    'On-demand training & onboarding',
+                    'Enhanced security & compliance',
+                    '1-year revision & snapshot history'
+                ];
+            } else if (records > 5000 || features.gantt || features.extensions || features.support || usage === 'growing-team') {
+                recommendedPlan = 'Pro';
+                monthlyPrice = 20 * collaborators;
+                reasoning = `You need ${records.toLocaleString()} records and advanced features like ${features.gantt ? 'Gantt views, ' : ''}${features.extensions ? 'extensions, ' : ''}which are only available in Pro. Pro supports up to 50,000 records per base and 25,000 automation runs.`;
+                planFeatures = [
+                    '50,000 records per base',
+                    '25,000 automation runs per month',
+                    'Gantt & timeline views',
+                    'All extensions & integrations',
+                    'Priority support',
+                    'Admin panel & controls',
+                    '6-month revision history',
+                    'Field & table editing permissions'
+                ];
+            } else if (records > 1200 || features.automations || usage === 'small-team' || collaborators > 2) {
+                recommendedPlan = 'Plus';
+                monthlyPrice = 10 * collaborators;
+                reasoning = `With ${records.toLocaleString()} records and ${collaborators} collaborators, Plus gives you 5,000 records per base and 5,000 automation runs per month. Perfect for small teams.`;
+                planFeatures = [
+                    '5,000 records per base',
+                    '5,000 automation runs per month',
+                    '3-month revision history',
+                    'Personal & team views',
+                    'Custom branded forms',
+                    'Gantt view (limited)',
+                    'Automatic table syncing',
+                    'Standard support'
+                ];
+            } else {
+                recommendedPlan = 'Free';
+                monthlyPrice = 0;
+                reasoning = 'Your requirements fit perfectly within the free plan! You get unlimited bases with 1,200 records each, which covers most personal projects and small teams.';
+                planFeatures = [
+                    'Unlimited bases',
+                    '1,200 records per base',
+                    'Up to 5 creators/editors',
+                    'Unlimited commenter & read-only users',
+                    '100 automation runs per month',
+                    '1 GB attachments per base',
+                    '2-week revision history',
+                    'Interface Designer'
+                ];
+            }
+
+            // Display results
+            document.getElementById('planName').textContent = recommendedPlan;
+
+            if (monthlyPrice === 'Custom') {
+                document.getElementById('totalPrice').textContent = 'Contact Sales';
+                document.getElementById('totalPrice').nextElementSibling.style.display = 'none';
+            } else {
+                document.getElementById('totalPrice').textContent = monthlyPrice.toLocaleString();
+                document.getElementById('totalPrice').nextElementSibling.style.display = 'inline';
+            }
+
+            let detailsText = `For ${collaborators} team member${collaborators > 1 ? 's' : ''} managing ${records.toLocaleString()} records across ${bases} base${bases > 1 ? 's' : ''}.`;
+
+            if (monthlyPrice !== 'Custom' && monthlyPrice > 0) {
+                const annualPrice = Math.round(monthlyPrice * 12 * 0.8);
+                detailsText += ` <strong>Save 20% with annual billing:</strong> $${annualPrice.toLocaleString()}/year (${Math.round(annualPrice/12)}/month).`;
+            }
+
+            document.getElementById('planDetails').innerHTML = detailsText;
+            document.getElementById('reasoning').textContent = reasoning;
+
+            const featuresHTML = '<ul>' + planFeatures.map(f => `<li>${f}</li>`).join('') + '</ul>';
+            document.getElementById('features').innerHTML = featuresHTML;
+
+            document.getElementById('result').classList.add('show');
+            document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        // Auto-calculate on load for demo
+        window.addEventListener('load', function() {
+            setTimeout(calculatePlan, 500);
+        });
+    </script>
+</body>
+</html>

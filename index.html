@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Business Calculators - SaaS Pricing, Freelance Rates & More | OatCode</title>
+    <meta name="description" content="Free online calculators for SaaS pricing, freelance rates, creator earnings, and business finances. Calculate Shopify fees, Stripe costs, Notion pricing, and more.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #2D3748;
+            background: #F7FAFC;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 1.3em;
+            opacity: 0.95;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        .section-title {
+            font-size: 2em;
+            margin-bottom: 30px;
+            color: #2D3748;
+            text-align: center;
+        }
+
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 60px;
+        }
+
+        .calc-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .calc-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+        }
+
+        .calc-card h3 {
+            font-size: 1.3em;
+            margin-bottom: 10px;
+            color: #667eea;
+        }
+
+        .calc-card p {
+            color: #718096;
+            font-size: 0.95em;
+        }
+
+        .calc-category {
+            display: inline-block;
+            padding: 4px 12px;
+            background: #EDF2F7;
+            border-radius: 20px;
+            font-size: 0.85em;
+            margin-bottom: 12px;
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .footer {
+            background: #2D3748;
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2em;
+            }
+
+            .calculator-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <h1>📊 Free Business Calculators</h1>
+        <p>Calculate pricing, fees, revenue, and costs for your business. 100% free, no signup required.</p>
+    </div>
+
+    <div class="container">
+        <h2 class="section-title">🛠️ SaaS & Tool Pricing Calculators</h2>
+        <div class="calculator-grid">
+            <a href="/calculators/shopify-pricing/" class="calc-card">
+                <div class="calc-category">E-commerce</div>
+                <h3>Shopify Plan Calculator</h3>
+                <p>Compare Shopify pricing plans and find the most cost-effective option for your store size.</p>
+            </a>
+
+            <a href="/calculators/stripe-fee-calculator/" class="calc-card">
+                <div class="calc-category">Payments</div>
+                <h3>Stripe Fee Calculator</h3>
+                <p>Calculate exact Stripe processing fees for cards, ACH, international payments, and more.</p>
+            </a>
+
+            <a href="/calculators/zoom-plan-calculator/" class="calc-card">
+                <div class="calc-category">Video</div>
+                <h3>Zoom Plan Calculator</h3>
+                <p>Compare Zoom plans based on participants, duration, and features you need.</p>
+            </a>
+
+            <a href="/calculators/airtable-pricing/" class="calc-card">
+                <div class="calc-category">Productivity</div>
+                <h3>Airtable Plan Calculator</h3>
+                <p>Find the right Airtable plan based on records, team size, and automation needs.</p>
+            </a>
+
+            <a href="/calculators/notion-template-pricing/" class="calc-card">
+                <div class="calc-category">SaaS</div>
+                <h3>Notion Template Pricing</h3>
+                <p>Calculate optimal pricing for your Notion templates based on complexity and market.</p>
+            </a>
+        </div>
+
+        <h2 class="section-title">💼 Freelance & Service Calculators</h2>
+        <div class="calculator-grid">
+            <a href="/calculators/freelance-dev-rate/" class="calc-card">
+                <div class="calc-category">Freelance</div>
+                <h3>Freelance Developer Rate</h3>
+                <p>Calculate your hourly/project rates based on experience, skills, and market rates.</p>
+            </a>
+
+            <a href="/calculators/webflow-project-pricing/" class="calc-card">
+                <div class="calc-category">Web Design</div>
+                <h3>Webflow Project Pricing</h3>
+                <p>Estimate what to charge for Webflow projects based on complexity and features.</p>
+            </a>
+
+            <a href="/calculators/car-detailing-pricing/" class="calc-card">
+                <div class="calc-category">Services</div>
+                <h3>Car Detailing Pricing</h3>
+                <p>Calculate optimal pricing for car detailing services by vehicle type and package.</p>
+            </a>
+
+            <a href="/calculators/rideshare-tax/" class="calc-card">
+                <div class="calc-category">Gig Economy</div>
+                <h3>Rideshare Tax Calculator</h3>
+                <p>Estimate quarterly taxes and deductions for Uber/Lyft drivers.</p>
+            </a>
+        </div>
+
+        <h2 class="section-title">🎨 Creator & Digital Product Calculators</h2>
+        <div class="calculator-grid">
+            <a href="/calculators/figma-plugin-revenue/" class="calc-card">
+                <div class="calc-category">Design</div>
+                <h3>Figma Plugin Revenue</h3>
+                <p>Estimate earnings from Figma plugins based on pricing model and downloads.</p>
+            </a>
+
+            <a href="/calculators/canva-template-earnings/" class="calc-card">
+                <div class="calc-category">Templates</div>
+                <h3>Canva Template Earnings</h3>
+                <p>Calculate revenue from selling Canva templates on Etsy, Gumroad, or your site.</p>
+            </a>
+
+            <a href="/calculators/podcast-sponsorship/" class="calc-card">
+                <div class="calc-category">Podcasting</div>
+                <h3>Podcast Sponsorship Rate</h3>
+                <p>Calculate CPM rates and revenue for podcast sponsorships by ad placement.</p>
+            </a>
+
+            <a href="/calculators/substack-pricing/" class="calc-card">
+                <div class="calc-category">Newsletter</div>
+                <h3>Substack Pricing Calculator</h3>
+                <p>Determine optimal pricing for your paid newsletter based on audience and niche.</p>
+            </a>
+
+            <a href="/calculators/etsy-revenue/" class="calc-card">
+                <div class="calc-category">E-commerce</div>
+                <h3>Etsy Revenue Calculator</h3>
+                <p>Calculate net profit after Etsy fees, shipping, and production costs.</p>
+            </a>
+
+            <a href="/calculators/discord-boost/" class="calc-card">
+                <div class="calc-category">Community</div>
+                <h3>Discord Boost Calculator</h3>
+                <p>Calculate costs to boost your Discord server to Level 1, 2, or 3.</p>
+            </a>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2024 OatCode Calculators. All calculators are free to use.</p>
+        <p style="margin-top: 10px; opacity: 0.8;">Built to help entrepreneurs, freelancers, and creators make better financial decisions.</p>
+    </div>
+</body>
+</html>

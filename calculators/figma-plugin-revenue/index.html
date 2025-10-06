@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Figma Plugin Revenue Calculator - Estimate Your Earnings | OatCode</title>
+    <meta name="description" content="Calculate potential revenue from your Figma plugin. Estimate earnings based on pricing model, downloads, conversion rates, and monetization strategy.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+
+        .content {
+            padding: 50px 40px;
+        }
+
+        .input-group {
+            margin-bottom: 30px;
+        }
+
+        .input-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #2D3748;
+            font-size: 1.1em;
+        }
+
+        .helper-text {
+            font-size: 0.9em;
+            color: #718096;
+            margin-top: 5px;
+        }
+
+        .input-group input,
+        .input-group select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #E2E8F0;
+            border-radius: 10px;
+            font-size: 1em;
+            transition: all 0.3s;
+        }
+
+        .input-group input:focus,
+        .input-group select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .calculate-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .result {
+            margin-top: 40px;
+            padding: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            color: white;
+            display: none;
+        }
+
+        .result.show {
+            display: block;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .result h2 {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+        }
+
+        .revenue-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .revenue-card {
+            background: rgba(255,255,255,0.15);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .revenue-card .label {
+            font-size: 0.9em;
+            opacity: 0.9;
+            margin-bottom: 10px;
+        }
+
+        .revenue-card .value {
+            font-size: 2.2em;
+            font-weight: 700;
+        }
+
+        .details {
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 2px solid rgba(255,255,255,0.3);
+            line-height: 1.8;
+            font-size: 1.05em;
+        }
+
+        .details p {
+            margin-bottom: 12px;
+        }
+
+        .breakdown {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .breakdown h3 {
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .breakdown-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .breakdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .content-section {
+            margin-top: 50px;
+            padding-top: 40px;
+            border-top: 3px solid #E2E8F0;
+        }
+
+        .content-section h2 {
+            color: #2D3748;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .content-section p {
+            color: #4A5568;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            font-size: 1.05em;
+        }
+
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 25px;
+        }
+
+        .tip-card {
+            padding: 20px;
+            background: #F7FAFC;
+            border-left: 4px solid #667eea;
+            border-radius: 8px;
+        }
+
+        .tip-card h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .tip-card p {
+            color: #4A5568;
+            font-size: 0.95em;
+        }
+
+        .affiliate-cards {
+            display: grid;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .affiliate-card {
+            padding: 24px;
+            border: 2px solid #E2E8F0;
+            border-radius: 12px;
+            transition: all 0.3s;
+        }
+
+        .affiliate-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .affiliate-card h3 {
+            color: #2D3748;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+
+        .affiliate-card p {
+            margin-bottom: 15px;
+        }
+
+        .affiliate-card a {
+            display: inline-block;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: transform 0.2s;
+        }
+
+        .affiliate-card a:hover {
+            transform: scale(1.05);
+        }
+
+        .cta-section {
+            margin-top: 50px;
+            padding: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            text-align: center;
+            color: white;
+        }
+
+        .cta-section h2 {
+            font-size: 2em;
+            margin-bottom: 15px;
+        }
+
+        .cta-section p {
+            font-size: 1.2em;
+            margin-bottom: 25px;
+            opacity: 0.95;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            padding: 15px 40px;
+            background: white;
+            color: #667eea;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 1.1em;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 40px 20px;
+            }
+
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .content {
+                padding: 30px 20px;
+            }
+
+            .revenue-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .tips-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎨 Figma Plugin Revenue Calculator</h1>
+            <p>Estimate your potential earnings from a Figma plugin</p>
+        </div>
+
+        <div class="content">
+            <div class="input-group">
+                <label for="model">Monetization Model</label>
+                <select id="model">
+                    <option value="free">Free (No Revenue)</option>
+                    <option value="freemium">Freemium (Free + Paid Features)</option>
+                    <option value="one-time" selected>One-Time Purchase</option>
+                    <option value="subscription">Subscription Model</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label for="downloads">Monthly Downloads</label>
+                <input type="number" id="downloads" placeholder="e.g., 1000" min="0" value="500">
+                <div class="helper-text">Estimate based on similar plugins or target audience size</div>
+            </div>
+
+            <div class="input-group">
+                <label for="price">Price Per User</label>
+                <input type="number" id="price" placeholder="e.g., 12" min="0" step="0.01" value="15">
+                <div class="helper-text">One-time payment or monthly subscription price</div>
+            </div>
+
+            <div class="input-group">
+                <label for="conversion">Conversion Rate (%)</label>
+                <input type="number" id="conversion" placeholder="e.g., 2.5" min="0" max="100" step="0.1" value="2">
+                <div class="helper-text">Percentage of free users who convert to paid (typical: 1-5%)</div>
+            </div>
+
+            <div class="input-group">
+                <label for="churn">Monthly Churn Rate (%) - For Subscriptions</label>
+                <input type="number" id="churn" placeholder="e.g., 5" min="0" max="100" step="0.1" value="5">
+                <div class="helper-text">Percentage of subscribers who cancel each month</div>
+            </div>
+
+            <button class="calculate-btn" onclick="calculateRevenue()">Calculate Revenue</button>
+
+            <div class="result" id="result">
+                <h2>Revenue Projection</h2>
+                <div class="revenue-grid">
+                    <div class="revenue-card">
+                        <div class="label">Monthly Revenue</div>
+                        <div class="value">$<span id="monthlyRev"></span></div>
+                    </div>
+                    <div class="revenue-card">
+                        <div class="label">Annual Revenue</div>
+                        <div class="value">$<span id="annualRev"></span></div>
+                    </div>
+                    <div class="revenue-card">
+                        <div class="label">Paying Users</div>
+                        <div class="value"><span id="payingUsers"></span></div>
+                    </div>
+                </div>
+
+                <div class="details">
+                    <p><strong>💡 Projection Based On:</strong> <span id="modelDescription"></span></p>
+                    <p id="additionalInfo"></p>
+                </div>
+
+                <div class="breakdown">
+                    <h3>📊 Revenue Breakdown</h3>
+                    <div id="breakdownContent"></div>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2>💰 Figma Plugin Monetization Strategies</h2>
+                <p>Choosing the right pricing model for your Figma plugin is critical to success. Here's what works best in the Figma ecosystem.</p>
+
+                <div class="tips-grid">
+                    <div class="tip-card">
+                        <h3>💵 One-Time Purchase</h3>
+                        <p>Best for utility plugins. Typical pricing: $5-$30. Lower barrier to entry but no recurring revenue. Average conversion: 2-4%.</p>
+                    </div>
+                    <div class="tip-card">
+                        <h3>🔄 Subscription Model</h3>
+                        <p>Best for plugins with ongoing value (API integrations, cloud features). Typical: $5-15/month. Predictable MRR but higher churn. Average conversion: 1-3%.</p>
+                    </div>
+                    <div class="tip-card">
+                        <h3>🎁 Freemium</h3>
+                        <p>Free core features, paid premium features. Great for user acquisition. Premium conversion: 2-5%. Best for plugins with clear upgrade path.</p>
+                    </div>
+                    <div class="tip-card">
+                        <h3>🏢 Team Licensing</h3>
+                        <p>Offer team/enterprise plans at premium pricing ($50-200/team). Higher revenue per customer, lower volume. Target design agencies and larger companies.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2>🛠️ Essential Tools for Figma Plugin Developers</h2>
+                <div class="affiliate-cards">
+                    <div class="affiliate-card">
+                        <h3>Figma</h3>
+                        <p>Start building Figma plugins with a free account. Access the full Figma Plugin API and publish to the community.</p>
+                        <a href="https://www.figma.com/signup" target="_blank" rel="noopener">Start Free →</a>
+                    </div>
+                    <div class="affiliate-card">
+                        <h3>Gumroad</h3>
+                        <p>Sell your Figma plugin with one-time purchases or subscriptions. Simple setup, handles payments and licensing. 10% + payment processing fee.</p>
+                        <a href="https://gumroad.com" target="_blank" rel="noopener">Sell on Gumroad →</a>
+                    </div>
+                    <div class="affiliate-card">
+                        <h3>Lemon Squeezy</h3>
+                        <p>Merchant of record for digital products. Perfect for selling Figma plugins globally without tax compliance headaches. Handles VAT, sales tax, and payments.</p>
+                        <a href="https://lemonsqueezy.com" target="_blank" rel="noopener">Try Lemon Squeezy →</a>
+                    </div>
+                    <div class="affiliate-card">
+                        <h3>Paddle</h3>
+                        <p>Best for subscription-based Figma plugins. Manages billing, invoicing, and global tax compliance. Great analytics and retention tools.</p>
+                        <a href="https://paddle.com" target="_blank" rel="noopener">Start with Paddle →</a>
+                    </div>
+                    <div class="affiliate-card">
+                        <h3>TypeScript</h3>
+                        <p>Build robust Figma plugins with TypeScript. Better tooling, type safety, and maintainability for complex plugins.</p>
+                        <a href="https://www.typescriptlang.org" target="_blank" rel="noopener">Learn TypeScript →</a>
+                    </div>
+                    <div class="affiliate-card">
+                        <h3>PostHog</h3>
+                        <p>Track plugin usage, feature adoption, and user behavior. Open-source product analytics built for developers. Free up to 1M events/month.</p>
+                        <a href="https://posthog.com" target="_blank" rel="noopener">Start with PostHog →</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2>📈 Tips for Maximizing Figma Plugin Revenue</h2>
+
+                <p><strong>Focus on Real Problems:</strong> The most successful Figma plugins solve specific pain points for designers. Spend time in the Figma community understanding what frustrates users before building.</p>
+
+                <p><strong>Nail Your Plugin Description:</strong> Your plugin listing is your sales page. Include screenshots, demo videos, and clear value proposition. First 100 characters are critical for search results.</p>
+
+                <p><strong>Optimize for Discovery:</strong> Most users discover plugins through Figma's built-in search. Use relevant keywords in your plugin name and description. "Icons" performs better than "Icon Tool" in search.</p>
+
+                <p><strong>Build Trust with Free Version:</strong> Start with a free version to get installs and reviews. Users are 3x more likely to pay for a plugin they already use and love. Add premium features later.</p>
+
+                <p><strong>Pricing Sweet Spots:</strong> Data shows $12-19 one-time and $7-12/month subscription perform best. Higher prices ($30+) work for specialized enterprise tools with clear ROI.</p>
+
+                <p><strong>Use Gumroad or Lemon Squeezy:</strong> Don't build payment infrastructure yourself. These platforms handle licensing, payments, and taxes for 10% fee. Focus on building a great plugin instead.</p>
+
+                <p><strong>Reduce Churn:</strong> For subscriptions, email users when they cancel to understand why. Common reasons: stopped using Figma, found alternative, price too high. Offer annual discount to reduce churn.</p>
+
+                <p><strong>Team Licensing = Higher Revenue:</strong> A 10-person design team paying $10/seat/month = $100/month recurring revenue vs $15 one-time from individuals. Target agencies and larger companies.</p>
+            </div>
+
+            <div class="cta-section">
+                <h2>Need More SaaS Calculators?</h2>
+                <p>Check out our pricing calculators for Notion, Airtable, Webflow, and more SaaS platforms.</p>
+                <a href="https://oatcode.com" class="cta-btn">View All Calculators</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function calculateRevenue() {
+            const model = document.getElementById('model').value;
+            const downloads = parseInt(document.getElementById('downloads').value) || 0;
+            const price = parseFloat(document.getElementById('price').value) || 0;
+            const conversion = parseFloat(document.getElementById('conversion').value) || 0;
+            const churn = parseFloat(document.getElementById('churn').value) || 0;
+
+            let monthlyRevenue = 0;
+            let annualRevenue = 0;
+            let payingUsers = 0;
+            let modelDescription = '';
+            let additionalInfo = '';
+            let breakdownItems = [];
+
+            if (model === 'free') {
+                monthlyRevenue = 0;
+                annualRevenue = 0;
+                payingUsers = 0;
+                modelDescription = 'Free plugin with no direct monetization.';
+                additionalInfo = 'Consider monetizing through: sponsorships, affiliate links, or building brand awareness for paid products.';
+                breakdownItems = [
+                    { label: 'Monthly Downloads', value: downloads.toLocaleString() },
+                    { label: 'Conversion Rate', value: '0%' },
+                    { label: 'Revenue Model', value: 'None' }
+                ];
+            } else if (model === 'one-time') {
+                payingUsers = Math.round(downloads * (conversion / 100));
+                monthlyRevenue = payingUsers * price;
+                annualRevenue = monthlyRevenue * 12;
+
+                modelDescription = `One-time purchase model at $${price} per user with ${conversion}% conversion rate.`;
+                additionalInfo = `Each month, ${payingUsers.toLocaleString()} out of ${downloads.toLocaleString()} downloads convert to paying customers. This model requires continuous new user acquisition for sustained revenue.`;
+
+                breakdownItems = [
+                    { label: 'Monthly Downloads', value: downloads.toLocaleString() },
+                    { label: 'Conversion Rate', value: `${conversion}%` },
+                    { label: 'Paying Users/Month', value: payingUsers.toLocaleString() },
+                    { label: 'Price Per User', value: `$${price}` },
+                    { label: 'Monthly Revenue', value: `$${monthlyRevenue.toLocaleString()}` }
+                ];
+            } else if (model === 'subscription') {
+                // Subscription model with churn
+                const newSubscribers = Math.round(downloads * (conversion / 100));
+
+                // Steady state subscribers calculation (new subs per month / churn rate)
+                // This estimates long-term subscriber base
+                const steadyStateSubscribers = Math.round(newSubscribers / (churn / 100));
+
+                payingUsers = steadyStateSubscribers;
+                monthlyRevenue = steadyStateSubscribers * price;
+                annualRevenue = monthlyRevenue * 12;
+
+                modelDescription = `Subscription model at $${price}/month with ${conversion}% conversion and ${churn}% monthly churn.`;
+                additionalInfo = `With ${newSubscribers.toLocaleString()} new subscribers per month and ${churn}% churn, you'll reach approximately ${steadyStateSubscribers.toLocaleString()} steady-state subscribers. This assumes consistent download rates.`;
+
+                breakdownItems = [
+                    { label: 'Monthly Downloads', value: downloads.toLocaleString() },
+                    { label: 'Conversion Rate', value: `${conversion}%` },
+                    { label: 'New Subscribers/Month', value: newSubscribers.toLocaleString() },
+                    { label: 'Monthly Churn Rate', value: `${churn}%` },
+                    { label: 'Steady-State Subscribers', value: steadyStateSubscribers.toLocaleString() },
+                    { label: 'Price Per Subscriber', value: `$${price}/mo` },
+                    { label: 'Monthly Recurring Revenue', value: `$${monthlyRevenue.toLocaleString()}` }
+                ];
+            } else if (model === 'freemium') {
+                // Freemium: higher user base, lower conversion
+                const actualConversion = conversion * 0.8; // Freemium typically has slightly lower conversion
+                payingUsers = Math.round(downloads * (actualConversion / 100));
+                monthlyRevenue = payingUsers * price;
+                annualRevenue = monthlyRevenue * 12;
+
+                modelDescription = `Freemium model with free tier and $${price} premium upgrade. Estimated ${actualConversion.toFixed(1)}% conversion to paid.`;
+                additionalInfo = `With ${downloads.toLocaleString()} monthly users trying the free version, ${payingUsers.toLocaleString()} upgrade to premium features. Free tier helps with distribution and virality.`;
+
+                breakdownItems = [
+                    { label: 'Monthly Free Users', value: downloads.toLocaleString() },
+                    { label: 'Premium Conversion', value: `${actualConversion.toFixed(1)}%` },
+                    { label: 'Paying Users', value: payingUsers.toLocaleString() },
+                    { label: 'Premium Price', value: `$${price}` },
+                    { label: 'Monthly Revenue', value: `$${monthlyRevenue.toLocaleString()}` }
+                ];
+            }
+
+            // Display results
+            document.getElementById('monthlyRev').textContent = monthlyRevenue.toLocaleString();
+            document.getElementById('annualRev').textContent = annualRevenue.toLocaleString();
+            document.getElementById('payingUsers').textContent = payingUsers.toLocaleString();
+            document.getElementById('modelDescription').textContent = modelDescription;
+            document.getElementById('additionalInfo').textContent = additionalInfo;
+
+            const breakdownHTML = breakdownItems.map(item => `
+                <div class="breakdown-item">
+                    <span>${item.label}</span>
+                    <strong>${item.value}</strong>
+                </div>
+            `).join('');
+            document.getElementById('breakdownContent').innerHTML = breakdownHTML;
+
+            document.getElementById('result').classList.add('show');
+            document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        // Update labels based on monetization model
+        document.getElementById('model').addEventListener('change', function() {
+            const priceLabel = document.querySelector('label[for="price"]');
+            const churnGroup = document.getElementById('churn').closest('.input-group');
+
+            if (this.value === 'subscription') {
+                priceLabel.textContent = 'Monthly Subscription Price';
+                churnGroup.style.display = 'block';
+            } else if (this.value === 'freemium') {
+                priceLabel.textContent = 'Premium Tier Price';
+                churnGroup.style.display = 'none';
+            } else if (this.value === 'one-time') {
+                priceLabel.textContent = 'One-Time Purchase Price';
+                churnGroup.style.display = 'none';
+            } else {
+                priceLabel.textContent = 'Price (N/A for Free)';
+                churnGroup.style.display = 'none';
+            }
+        });
+
+        // Auto-calculate on load
+        window.addEventListener('load', function() {
+            setTimeout(calculateRevenue, 500);
+        });
+    </script>
+</body>
+</html>

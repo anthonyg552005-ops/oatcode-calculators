@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stripe Fee Calculator - Calculate Payment Processing Costs | OatCode</title>
+    <meta name="description" content="Calculate Stripe fees instantly. Find out exactly how much Stripe charges for credit card processing, ACH, international cards, and more.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+
+        .content {
+            padding: 50px 40px;
+        }
+
+        .input-group {
+            margin-bottom: 30px;
+        }
+
+        .input-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #2D3748;
+            font-size: 1.1em;
+        }
+
+        .helper-text {
+            font-size: 0.9em;
+            color: #718096;
+            margin-top: 5px;
+        }
+
+        .input-group input,
+        .input-group select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #E2E8F0;
+            border-radius: 10px;
+            font-size: 1em;
+            transition: all 0.3s;
+        }
+
+        .input-group input:focus,
+        .input-group select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .calculate-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .result {
+            margin-top: 40px;
+            padding: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            color: white;
+            display: none;
+        }
+
+        .result.show {
+            display: block;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .result h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        .fee-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .fee-card {
+            background: rgba(255,255,255,0.15);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .fee-card .label {
+            font-size: 0.9em;
+            opacity: 0.9;
+            margin-bottom: 10px;
+        }
+
+        .fee-card .value {
+            font-size: 2.2em;
+            font-weight: 700;
+        }
+
+        .breakdown {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 25px;
+        }
+
+        .breakdown h3 {
+            margin-bottom: 15px;
+        }
+
+        .breakdown-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .breakdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .content-section {
+            margin-top: 50px;
+            padding-top: 40px;
+            border-top: 3px solid #E2E8F0;
+        }
+
+        .content-section h2 {
+            color: #2D3748;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .content-section p {
+            color: #4A5568;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            font-size: 1.05em;
+        }
+
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 25px;
+        }
+
+        .tip-card {
+            padding: 20px;
+            background: #F7FAFC;
+            border-left: 4px solid #667eea;
+            border-radius: 8px;
+        }
+
+        .tip-card h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .tip-card p {
+            color: #4A5568;
+            font-size: 0.95em;
+        }
+
+        .affiliate-cards {
+            display: grid;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .affiliate-card {
+            padding: 24px;
+            border: 2px solid #E2E8F0;
+            border-radius: 12px;
+            transition: all 0.3s;
+        }
+
+        .affiliate-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .affiliate-card h3 {
+            color: #2D3748;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+
+        .affiliate-card p {
+            margin-bottom: 15px;
+        }
+
+        .affiliate-card a {
+            display: inline-block;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: transform 0.2s;
+        }
+
+        .affiliate-card a:hover {
+            transform: scale(1.05);
+        }
+
+        .cta-section {
+            margin-top: 50px;
+            padding: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            text-align: center;
+            color: white;
+        }
+
+        .cta-section h2 {
+            font-size: 2em;
+            margin-bottom: 15px;
+        }
+
+        .cta-section p {
+            font-size: 1.2em;
+            margin-bottom: 25px;
+            opacity: 0.95;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            padding: 15px 40px;
+            background: white;
+            color: #667eea;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 1.1em;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 40px 20px;
+            }
+
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .content {
+                padding: 30px 20px;
+            }
+
+            .fee-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .tips-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>💳 Stripe Fee Calculator</h1>
+            <p>Calculate exact Stripe payment processing fees</p>
+        </div>
+
+        <div class="content">
+            <div class="input-group">
+                <label for="amount">Transaction Amount ($)</label>
+                <input type="number" id="amount" placeholder="e.g., 100" min="0" step="0.01" value="100">
+            </div>
+
+            <div class="input-group">
+                <label for="payment-type">Payment Type</label>
+                <select id="payment-type">
+                    <option value="card-domestic">US Credit/Debit Card (2.9% + 30¢)</option>
+                    <option value="card-international">International Card (3.9% + 30¢)</option>
+                    <option value="ach">ACH Direct Debit (0.8%, max $5)</option>
+                    <option value="apple-pay">Apple Pay / Google Pay (2.9% + 30¢)</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label for="volume">Monthly Volume ($)</label>
+                <input type="number" id="volume" placeholder="e.g., 10000" min="0" value="5000">
+                <div class="helper-text">For volume-based fee estimates</div>
+            </div>
+
+            <button class="calculate-btn" onclick="calculateFees()">Calculate Fees</button>
+
+            <div class="result" id="result">
+                <h2>Fee Breakdown</h2>
+                <div class="fee-grid">
+                    <div class="fee-card">
+                        <div class="label">Stripe Fee</div>
+                        <div class="value">$<span id="stripeFee"></span></div>
+                    </div>
+                    <div class="fee-card">
+                        <div class="label">You Receive</div>
+                        <div class="value">$<span id="youReceive"></span></div>
+                    </div>
+                    <div class="fee-card">
+                        <div class="label">Effective Rate</div>
+                        <div class="value"><span id="effectiveRate"></span>%</div>
+                    </div>
+                </div>
+
+                <div class="breakdown">
+                    <h3>Monthly Projection</h3>
+                    <div id="monthlyBreakdown"></div>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2>💰 Stripe Pricing Breakdown</h2>
+                <p>Understanding Stripe fees helps you price products correctly and forecast revenue accurately.</p>
+
+                <div class="tips-grid">
+                    <div class="tip-card">
+                        <h3>💳 Standard Cards</h3>
+                        <p>US cards: 2.9% + 30¢. International cards: 3.9% + 30¢. Currency conversion adds 1% more.</p>
+                    </div>
+                    <div class="tip-card">
+                        <h3>🏦 ACH Transfers</h3>
+                        <p>Only 0.8% capped at $5. Best for large transactions ($625+). 5-7 day settlement.</p>
+                    </div>
+                    <div class="tip-card">
+                        <h3>📱 Digital Wallets</h3>
+                        <p>Apple Pay, Google Pay: Same 2.9% + 30¢ as cards. Higher conversion rates offset fees.</p>
+                    </div>
+                    <div class="tip-card">
+                        <h3>🌍 International</h3>
+                        <p>Cross-border adds 1%, currency conversion adds 1%, international card adds 1%. Can reach 5.9% + 30¢.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2>🛠️ Payment Processing Tools</h2>
+                <div class="affiliate-cards">
+                    <div class="affiliate-card">
+                        <h3>Stripe</h3>
+                        <p>Accept payments online with no monthly fees. 2.9% + 30¢ per transaction. Instant setup, developer-friendly APIs, global support.</p>
+                        <a href="https://stripe.com" target="_blank" rel="noopener">Start with Stripe →</a>
+                    </div>
+                    <div class="affiliate-card">
+                        <h3>Lemon Squeezy</h3>
+                        <p>Merchant of record for SaaS. Handles global tax compliance (VAT, sales tax). Built on Stripe. 5% + payment fees.</p>
+                        <a href="https://lemonsqueezy.com" target="_blank" rel="noopener">Try Lemon Squeezy →</a>
+                    </div>
+                    <div class="affiliate-card">
+                        <h3>Paddle</h3>
+                        <p>Payment processor + merchant of record for software. Handles everything: payments, taxes, subscriptions. 5% + payment fees.</p>
+                        <a href="https://paddle.com" target="_blank" rel="noopener">Start with Paddle →</a>
+                    </div>
+                    <div class="affiliate-card">
+                        <h3>PayPal</h3>
+                        <p>Alternative to Stripe. 2.99% + 49¢ for domestic, 4.49% + fixed for international. Higher fees but wider acceptance.</p>
+                        <a href="https://paypal.com/business" target="_blank" rel="noopener">Compare PayPal →</a>
+                    </div>
+                    <div class="affiliate-card">
+                        <h3>Gumroad</h3>
+                        <p>Simple payment processing for creators. 10% fee includes hosting, delivery, and payment processing. No monthly fees.</p>
+                        <a href="https://gumroad.com" target="_blank" rel="noopener">Sell with Gumroad →</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2>📊 How to Minimize Payment Processing Fees</h2>
+
+                <p><strong>Pass Fees to Customers (Legally):</strong> Many states allow you to add a "service fee" to cover card processing. A $100 product becomes $103 with 3% fee passed through. This is legal in 48 states (CO and CT prohibit it). Stripe Checkout supports this natively.</p>
+
+                <p><strong>Use ACH for Large Transactions:</strong> For payments over $625, ACH (0.8% capped at $5) beats cards (2.9% + 30¢). A $1,000 ACH payment costs $5 vs $29.30 for a card. Offer ACH option for invoices over $500.</p>
+
+                <p><strong>Optimize for Domestic Cards:</strong> International cards cost 1% more (3.9% vs 2.9%). If possible, use a local Stripe account for each region. Stripe supports 45+ countries with local processing.</p>
+
+                <p><strong>Bundle Transactions:</strong> Instead of charging $10 four times ($1.20 in fees at 2.9% + 30¢ each), charge $40 once ($1.46 in fees). The fixed 30¢ kills small transactions. Minimum order values reduce fee burden.</p>
+
+                <p><strong>Negotiate Volume Pricing:</strong> At $1M+/year volume, contact Stripe for custom pricing. You can negotiate down to 2.2-2.5% + 30¢. At $10M+/year, you can get interchange-plus pricing (1.5-1.8% + interchange).</p>
+
+                <p><strong>Use Stripe Billing for Subscriptions:</strong> Subscriptions have the same 2.9% + 30¢ fee, but Stripe Billing automates dunning (retry failed payments), reducing churn by 30-40%. The recovered revenue offsets fees.</p>
+
+                <p><strong>Avoid Currency Conversion Fees:</strong> If selling internationally, collect in local currency (EUR, GBP, JPY). Customers prefer it, and you avoid the 1% conversion fee. Stripe supports 135+ currencies.</p>
+            </div>
+
+            <div class="cta-section">
+                <h2>Need More Payment Calculators?</h2>
+                <p>Check out our fee calculators for PayPal, Square, and other payment processors.</p>
+                <a href="https://oatcode.com" class="cta-btn">View All Calculators</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function calculateFees() {
+            const amount = parseFloat(document.getElementById('amount').value) || 0;
+            const paymentType = document.getElementById('payment-type').value;
+            const monthlyVolume = parseFloat(document.getElementById('volume').value) || 0;
+
+            // Fee structures
+            const fees = {
+                'card-domestic': { percent: 0.029, fixed: 0.30, name: 'US Card' },
+                'card-international': { percent: 0.039, fixed: 0.30, name: 'International Card' },
+                'ach': { percent: 0.008, fixed: 0, cap: 5, name: 'ACH' },
+                'apple-pay': { percent: 0.029, fixed: 0.30, name: 'Apple/Google Pay' }
+            };
+
+            const fee = fees[paymentType];
+
+            // Calculate single transaction
+            let stripeFee = (amount * fee.percent) + fee.fixed;
+            if (fee.cap && stripeFee > fee.cap) {
+                stripeFee = fee.cap;
+            }
+
+            const youReceive = amount - stripeFee;
+            const effectiveRate = amount > 0 ? (stripeFee / amount * 100) : 0;
+
+            // Display results
+            document.getElementById('stripeFee').textContent = stripeFee.toFixed(2);
+            document.getElementById('youReceive').textContent = youReceive.toFixed(2);
+            document.getElementById('effectiveRate').textContent = effectiveRate.toFixed(2);
+
+            // Monthly projection
+            const avgTransaction = amount;
+            const transactionsPerMonth = monthlyVolume / avgTransaction;
+            const monthlyFees = transactionsPerMonth * stripeFee;
+            const monthlyNet = monthlyVolume - monthlyFees;
+
+            const breakdownHTML = `
+                <div class="breakdown-item">
+                    <span>Monthly Volume</span>
+                    <strong>$${monthlyVolume.toLocaleString()}</strong>
+                </div>
+                <div class="breakdown-item">
+                    <span>Transactions (~${Math.round(transactionsPerMonth)} × $${avgTransaction.toFixed(2)})</span>
+                    <strong>${Math.round(transactionsPerMonth).toLocaleString()}</strong>
+                </div>
+                <div class="breakdown-item">
+                    <span>Total Stripe Fees</span>
+                    <strong>-$${monthlyFees.toFixed(2)}</strong>
+                </div>
+                <div class="breakdown-item">
+                    <span>You Receive</span>
+                    <strong>$${monthlyNet.toFixed(2)}</strong>
+                </div>
+                <div class="breakdown-item">
+                    <span>Annual Fees</span>
+                    <strong>$${(monthlyFees * 12).toFixed(2)}</strong>
+                </div>
+            `;
+
+            document.getElementById('monthlyBreakdown').innerHTML = breakdownHTML;
+
+            document.getElementById('result').classList.add('show');
+            document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        // Auto-calculate on load
+        window.addEventListener('load', function() {
+            setTimeout(calculateFees, 500);
+        });
+    </script>
+</body>
+</html>
