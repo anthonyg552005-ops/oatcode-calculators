@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WordPress Hosting Pricing Calculator - Web Hosting Cost Estimator | OatCode</title>
+    <meta name="description" content="Calculate WordPress hosting costs. Compare shared, managed WordPress, VPS, and dedicated hosting based on traffic and features.">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
+        .container { max-width: 900px; margin: 0 auto; }
+        .header { text-align: center; color: white; margin-bottom: 30px; }
+        .header h1 { font-size: 2.5rem; margin-bottom: 10px; }
+        .calculator-card { background: white; border-radius: 20px; padding: 40px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); margin-bottom: 30px; }
+        .input-group { margin-bottom: 25px; }
+        .input-group label { display: block; font-weight: 600; margin-bottom: 8px; }
+        .input-group input, .input-group select { width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 16px; }
+        .checkbox-group label { display: flex; align-items: center; margin-bottom: 10px; cursor: pointer; }
+        .checkbox-group input { margin-right: 10px; }
+        .calculate-btn { width: 100%; padding: 15px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 8px; font-size: 18px; font-weight: 600; cursor: pointer; }
+        .result { margin-top: 30px; padding: 25px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); border-radius: 12px; color: white; display: none; }
+        .result.show { display: block; }
+        .result h3 { font-size: 1.8rem; margin-bottom: 15px; }
+        .plan-details { background: rgba(255,255,255,0.2); padding: 15px; border-radius: 8px; margin-top: 15px; }
+        .tips { background: #f8f9fa; padding: 25px; border-radius: 12px; margin-top: 20px; }
+        .tips h4 { color: #667eea; margin-bottom: 15px; }
+        .affiliate-section { margin-top: 30px; padding: 25px; background: #fff5f5; border-radius: 12px; }
+        .affiliate-links { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 15px; }
+        .affiliate-link { display: block; padding: 12px 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; text-decoration: none; border-radius: 8px; text-align: center; font-weight: 600; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌐 WordPress Hosting Calculator</h1>
+            <p>Find the right hosting for your site</p>
+        </div>
+
+        <div class="calculator-card">
+            <div class="input-group">
+                <label for="visitors">Monthly Visitors</label>
+                <input type="number" id="visitors" min="0" value="10000" placeholder="e.g., 10000">
+            </div>
+
+            <div class="input-group">
+                <label>Features Needed:</label>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" id="needManaged"> Managed WordPress (Auto-updates)</label>
+                </div>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" id="needStaging"> Staging Environment</label>
+                </div>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" id="needCDN"> CDN & Caching</label>
+                </div>
+            </div>
+
+            <button class="calculate-btn" onclick="calc()">Calculate Pricing</button>
+            <div class="result" id="result"></div>
+        </div>
+
+        <div class="tips">
+            <h4>💡 WordPress Hosting Tips</h4>
+            <ul>
+                <li><strong>Shared Hosting ($3-10/month):</strong> Good for small blogs (< 10k visitors/month). Basic performance.</li>
+                <li><strong>Managed WordPress ($15-50/month):</strong> Auto-updates, staging, CDN. Best for growing sites (10k-100k visitors).</li>
+                <li><strong>VPS ($40-100/month):</strong> Dedicated resources, full control. For high-traffic sites (100k+ visitors).</li>
+                <li><strong>Dedicated ($100-300/month):</strong> Entire server, maximum performance. For enterprise sites.</li>
+            </ul>
+        </div>
+
+        <div class="affiliate-section">
+            <h4>🚀 WordPress Hosting Providers</h4>
+            <div class="affiliate-links">
+                <a href="https://www.bluehost.com" target="_blank" class="affiliate-link">Try Bluehost</a>
+                <a href="https://www.siteground.com" target="_blank" class="affiliate-link">Try SiteGround</a>
+                <a href="https://wpengine.com" target="_blank" class="affiliate-link">Try WP Engine</a>
+                <a href="https://kinsta.com" target="_blank" class="affiliate-link">Try Kinsta</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function calc() {
+            const visitors = parseInt(document.getElementById('visitors').value) || 0;
+            const needManaged = document.getElementById('needManaged').checked;
+            const needStaging = document.getElementById('needStaging').checked;
+            const needCDN = document.getElementById('needCDN').checked;
+
+            let plan = 'Shared Hosting';
+            let monthly = 5;
+            let features = ['10GB storage', 'Basic support', 'Free SSL', '1-3 websites'];
+
+            if (visitors > 100000 || (needManaged && needStaging && needCDN)) {
+                plan = 'VPS Hosting';
+                monthly = 70;
+                features = ['Dedicated CPU & RAM', 'Full root access', 'Custom configurations', 'Advanced security', '100k+ visitors/month'];
+            } else if (needManaged || needStaging || needCDN || visitors > 10000) {
+                plan = 'Managed WordPress';
+                monthly = 30;
+                features = ['Auto WordPress updates', 'Daily backups', 'Staging environment', 'CDN included', 'Expert support', '10k-100k visitors'];
+            }
+
+            const annual = monthly * 12;
+
+            document.getElementById('result').innerHTML = `
+                <h3>Recommended: ${plan}</h3>
+                <p>Suitable for ${visitors.toLocaleString()} monthly visitors.</p>
+                <div class="plan-details">
+                    <p><strong>Monthly Cost:</strong> $${monthly}/month</p>
+                    <p><strong>Annual Cost:</strong> $${annual}</p>
+                    <p style="margin-top: 15px;"><strong>Features:</strong></p>
+                    <ul style="margin-left: 20px;">${features.map(f => `<li>${f}</li>`).join('')}</ul>
+                </div>
+            `;
+            document.getElementById('result').classList.add('show');
+        }
+        window.addEventListener('load', calc);
+    </script>
+</body>
+</html>

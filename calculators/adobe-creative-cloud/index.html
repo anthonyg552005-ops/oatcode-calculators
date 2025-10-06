@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adobe Creative Cloud Pricing Calculator - Design Software Cost | OatCode</title>
+    <meta name="description" content="Calculate Adobe Creative Cloud pricing. Compare Photography, Single App, All Apps, and Business plans based on your creative needs.">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
+        .container { max-width: 900px; margin: 0 auto; }
+        .header { text-align: center; color: white; margin-bottom: 30px; }
+        .header h1 { font-size: 2.5rem; margin-bottom: 10px; }
+        .calculator-card { background: white; border-radius: 20px; padding: 40px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); margin-bottom: 30px; }
+        .input-group { margin-bottom: 25px; }
+        .input-group label { display: block; font-weight: 600; margin-bottom: 8px; }
+        .input-group input, .input-group select { width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 16px; }
+        .checkbox-group label { display: flex; align-items: center; margin-bottom: 10px; cursor: pointer; }
+        .checkbox-group input { margin-right: 10px; }
+        .calculate-btn { width: 100%; padding: 15px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 8px; font-size: 18px; font-weight: 600; cursor: pointer; }
+        .result { margin-top: 30px; padding: 25px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); border-radius: 12px; color: white; display: none; }
+        .result.show { display: block; }
+        .result h3 { font-size: 1.8rem; margin-bottom: 15px; }
+        .plan-details { background: rgba(255,255,255,0.2); padding: 15px; border-radius: 8px; margin-top: 15px; }
+        .tips { background: #f8f9fa; padding: 25px; border-radius: 12px; margin-top: 20px; }
+        .tips h4 { color: #667eea; margin-bottom: 15px; }
+        .affiliate-section { margin-top: 30px; padding: 25px; background: #fff5f5; border-radius: 12px; }
+        .affiliate-links { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 15px; }
+        .affiliate-link { display: block; padding: 12px 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; text-decoration: none; border-radius: 8px; text-align: center; font-weight: 600; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎨 Adobe Creative Cloud Calculator</h1>
+            <p>Design software pricing estimator</p>
+        </div>
+
+        <div class="calculator-card">
+            <div class="input-group">
+                <label for="users">Number of Users</label>
+                <input type="number" id="users" min="1" value="1" placeholder="e.g., 1">
+            </div>
+
+            <div class="input-group">
+                <label>Apps Needed:</label>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" id="needPhotoshop"> Photoshop</label>
+                </div>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" id="needLightroom"> Lightroom</label>
+                </div>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" id="needIllustrator"> Illustrator</label>
+                </div>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" id="needPremiere"> Premiere Pro</label>
+                </div>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" id="needAfterEffects"> After Effects</label>
+                </div>
+            </div>
+
+            <button class="calculate-btn" onclick="calc()">Calculate Pricing</button>
+            <div class="result" id="result"></div>
+        </div>
+
+        <div class="tips">
+            <h4>💡 Adobe CC Pricing</h4>
+            <ul>
+                <li><strong>Photography ($9.99/month):</strong> Photoshop + Lightroom + 20GB cloud storage.</li>
+                <li><strong>Single App ($22.99/month):</strong> One app (Photoshop, Illustrator, Premiere, etc.) + 100GB cloud.</li>
+                <li><strong>All Apps ($59.99/month):</strong> 20+ apps including Photoshop, Illustrator, Premiere, After Effects.</li>
+                <li><strong>Business ($35.99/user/month):</strong> All apps + business tools, admin controls, support.</li>
+            </ul>
+        </div>
+
+        <div class="affiliate-section">
+            <h4>🚀 Design Tools</h4>
+            <div class="affiliate-links">
+                <a href="https://www.adobe.com" target="_blank" class="affiliate-link">Try Adobe CC</a>
+                <a href="https://www.canva.com/pro" target="_blank" class="affiliate-link">Try Canva Pro</a>
+                <a href="https://www.figma.com" target="_blank" class="affiliate-link">Try Figma</a>
+                <a href="https://affinity.serif.com" target="_blank" class="affiliate-link">Try Affinity</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function calc() {
+            const users = parseInt(document.getElementById('users').value) || 1;
+            const needPhotoshop = document.getElementById('needPhotoshop').checked;
+            const needLightroom = document.getElementById('needLightroom').checked;
+            const needIllustrator = document.getElementById('needIllustrator').checked;
+            const needPremiere = document.getElementById('needPremiere').checked;
+            const needAfterEffects = document.getElementById('needAfterEffects').checked;
+
+            const appsCount = [needPhotoshop, needLightroom, needIllustrator, needPremiere, needAfterEffects].filter(Boolean).length;
+
+            let plan = 'Photography Plan';
+            let perUser = 9.99;
+            let features = ['Photoshop', 'Lightroom', 'Lightroom Classic', '20GB cloud storage', 'Portfolio website'];
+
+            if (appsCount > 2 || (needIllustrator || needPremiere || needAfterEffects)) {
+                plan = 'All Apps';
+                perUser = 59.99;
+                features = ['20+ creative apps', 'Photoshop, Illustrator, Premiere Pro', 'After Effects, InDesign, XD', '100GB cloud storage', 'Adobe Fonts', 'Portfolio website'];
+            } else if (appsCount === 1 && !needLightroom) {
+                plan = 'Single App';
+                perUser = 22.99;
+                features = ['Your choice of one app', '100GB cloud storage', 'Adobe Fonts', 'Portfolio website'];
+            }
+
+            const monthly = users * perUser;
+            const annual = monthly * 12;
+
+            document.getElementById('result').innerHTML = `
+                <h3>Recommended: Adobe ${plan}</h3>
+                <p>For ${users} user${users > 1 ? 's' : ''}.</p>
+                <div class="plan-details">
+                    <p><strong>Monthly Cost:</strong> $${monthly.toFixed(2)}</p>
+                    <p><strong>Annual Cost:</strong> $${annual.toFixed(2)}</p>
+                    <p><strong>Per User:</strong> $${perUser.toFixed(2)}/month</p>
+                    <p style="margin-top: 15px;"><strong>Includes:</strong></p>
+                    <ul style="margin-left: 20px;">${features.map(f => `<li>${f}</li>`).join('')}</ul>
+                </div>
+            `;
+            document.getElementById('result').classList.add('show');
+        }
+        window.addEventListener('load', calc);
+    </script>
+</body>
+</html>

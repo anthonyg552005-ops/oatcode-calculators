@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LinkedIn Premium Pricing Calculator - Professional Network Cost | OatCode</title>
+    <meta name="description" content="Calculate LinkedIn Premium pricing. Compare Career, Business, Sales Navigator, and Recruiter plans based on your professional needs.">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
+        .container { max-width: 900px; margin: 0 auto; }
+        .header { text-align: center; color: white; margin-bottom: 30px; }
+        .header h1 { font-size: 2.5rem; margin-bottom: 10px; }
+        .calculator-card { background: white; border-radius: 20px; padding: 40px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); margin-bottom: 30px; }
+        .input-group { margin-bottom: 25px; }
+        .input-group label { display: block; font-weight: 600; margin-bottom: 8px; }
+        .input-group select { width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 16px; }
+        .calculate-btn { width: 100%; padding: 15px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 8px; font-size: 18px; font-weight: 600; cursor: pointer; }
+        .result { margin-top: 30px; padding: 25px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); border-radius: 12px; color: white; display: none; }
+        .result.show { display: block; }
+        .result h3 { font-size: 1.8rem; margin-bottom: 15px; }
+        .plan-details { background: rgba(255,255,255,0.2); padding: 15px; border-radius: 8px; margin-top: 15px; }
+        .tips { background: #f8f9fa; padding: 25px; border-radius: 12px; margin-top: 20px; }
+        .tips h4 { color: #667eea; margin-bottom: 15px; }
+        .affiliate-section { margin-top: 30px; padding: 25px; background: #fff5f5; border-radius: 12px; }
+        .affiliate-links { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 15px; }
+        .affiliate-link { display: block; padding: 12px 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; text-decoration: none; border-radius: 8px; text-align: center; font-weight: 600; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>💼 LinkedIn Premium Calculator</h1>
+            <p>Professional networking pricing</p>
+        </div>
+
+        <div class="calculator-card">
+            <div class="input-group">
+                <label for="goal">Primary Goal</label>
+                <select id="goal">
+                    <option value="career">Job Seeking / Career Growth</option>
+                    <option value="business">Business Development / Networking</option>
+                    <option value="sales">Sales & Lead Generation</option>
+                    <option value="recruiting">Recruiting / Hiring</option>
+                </select>
+            </div>
+
+            <button class="calculate-btn" onclick="calc()">Calculate Pricing</button>
+            <div class="result" id="result"></div>
+        </div>
+
+        <div class="tips">
+            <h4>💡 LinkedIn Premium Tiers</h4>
+            <ul>
+                <li><strong>Career ($29.99/month):</strong> Job seeker tools, InMail messages, who's viewed your profile.</li>
+                <li><strong>Business ($59.99/month):</strong> Unlimited search, advanced filters, business insights, learning courses.</li>
+                <li><strong>Sales Navigator ($99/month):</strong> Advanced lead search, CRM integration, InMail credits, real-time insights.</li>
+                <li><strong>Recruiter Lite ($140/month):</strong> Recruiter search, project folders, InMail, applicant tracking.</li>
+            </ul>
+        </div>
+
+        <div class="affiliate-section">
+            <h4>🚀 Professional Networks</h4>
+            <div class="affiliate-links">
+                <a href="https://www.linkedin.com/premium" target="_blank" class="affiliate-link">Try LinkedIn Premium</a>
+                <a href="https://www.xing.com" target="_blank" class="affiliate-link">Try Xing</a>
+                <a href="https://www.meetup.com" target="_blank" class="affiliate-link">Try Meetup Pro</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function calc() {
+            const goal = document.getElementById('goal').value;
+
+            let plan, monthly, features;
+
+            if (goal === 'recruiting') {
+                plan = 'Recruiter Lite';
+                monthly = 140;
+                features = ['Advanced candidate search', 'Project folders & tracking', '30 InMail credits/month', 'Applicant management', 'Hiring insights'];
+            } else if (goal === 'sales') {
+                plan = 'Sales Navigator';
+                monthly = 99;
+                features = ['Advanced lead & company search', 'Lead recommendations', '50 InMail credits/month', 'CRM integrations', 'Real-time insights'];
+            } else if (goal === 'business') {
+                plan = 'Business';
+                monthly = 59.99;
+                features = ['Unlimited people browsing', 'Advanced search filters', '15 InMail credits/month', 'Business insights', 'LinkedIn Learning access'];
+            } else {
+                plan = 'Career';
+                monthly = 29.99;
+                features = ['See who viewed your profile', '5 InMail credits/month', 'Salary insights', 'Job applicant insights', 'Featured applicant badge'];
+            }
+
+            const annual = monthly * 12;
+
+            document.getElementById('result').innerHTML = `
+                <h3>Recommended: LinkedIn Premium ${plan}</h3>
+                <p>Best for ${goal === 'career' ? 'job seeking' : goal === 'business' ? 'networking' : goal === 'sales' ? 'sales' : 'recruiting'}.</p>
+                <div class="plan-details">
+                    <p><strong>Monthly Cost:</strong> $${monthly.toFixed(2)}</p>
+                    <p><strong>Annual Cost:</strong> $${annual.toFixed(2)}</p>
+                    <p style="margin-top: 15px;"><strong>Features:</strong></p>
+                    <ul style="margin-left: 20px;">${features.map(f => `<li>${f}</li>`).join('')}</ul>
+                </div>
+            `;
+            document.getElementById('result').classList.add('show');
+        }
+        window.addEventListener('load', calc);
+    </script>
+</body>
+</html>
