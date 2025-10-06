@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HubSpot Pricing Calculator - CRM & Marketing Cost Estimator | OatCode</title>
+    <meta name="description" content="Calculate HubSpot pricing for Marketing, Sales, and Service Hubs. Compare Free, Starter, Professional, and Enterprise plans.">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
+        .container { max-width: 900px; margin: 0 auto; }
+        .header { text-align: center; color: white; margin-bottom: 30px; }
+        .header h1 { font-size: 2.5rem; margin-bottom: 10px; }
+        .calculator-card { background: white; border-radius: 20px; padding: 40px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); margin-bottom: 30px; }
+        .input-group { margin-bottom: 25px; }
+        .input-group label { display: block; font-weight: 600; margin-bottom: 8px; }
+        .input-group input, .input-group select { width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 16px; }
+        .checkbox-group label { display: flex; align-items: center; margin-bottom: 10px; cursor: pointer; }
+        .checkbox-group input { margin-right: 10px; }
+        .calculate-btn { width: 100%; padding: 15px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 8px; font-size: 18px; font-weight: 600; cursor: pointer; }
+        .result { margin-top: 30px; padding: 25px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); border-radius: 12px; color: white; display: none; }
+        .result.show { display: block; }
+        .result h3 { font-size: 1.8rem; margin-bottom: 15px; }
+        .plan-details { background: rgba(255,255,255,0.2); padding: 15px; border-radius: 8px; margin-top: 15px; }
+        .tips { background: #f8f9fa; padding: 25px; border-radius: 12px; margin-top: 20px; }
+        .tips h4 { color: #667eea; margin-bottom: 15px; }
+        .affiliate-section { margin-top: 30px; padding: 25px; background: #fff5f5; border-radius: 12px; }
+        .affiliate-links { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 15px; }
+        .affiliate-link { display: block; padding: 12px 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; text-decoration: none; border-radius: 8px; text-align: center; font-weight: 600; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 HubSpot Pricing Calculator</h1>
+            <p>Calculate CRM, Marketing, and Sales costs</p>
+        </div>
+
+        <div class="calculator-card">
+            <div class="input-group">
+                <label for="contacts">Marketing Contacts</label>
+                <input type="number" id="contacts" min="0" value="1000" placeholder="e.g., 1000">
+            </div>
+
+            <div class="input-group">
+                <label for="hub">Primary Hub</label>
+                <select id="hub">
+                    <option value="marketing">Marketing Hub</option>
+                    <option value="sales">Sales Hub</option>
+                    <option value="service">Service Hub</option>
+                    <option value="cms">CMS Hub</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label>Features Needed:</label>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" id="needAutomation"> Marketing Automation</label>
+                </div>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" id="needABTesting"> A/B Testing</label>
+                </div>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" id="needReporting"> Custom Reporting</label>
+                </div>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" id="needAdvanced"> Advanced Features (Workflows, Attribution)</label>
+                </div>
+            </div>
+
+            <button class="calculate-btn" onclick="calc()">Calculate Pricing</button>
+            <div class="result" id="result"></div>
+        </div>
+
+        <div class="tips">
+            <h4>💡 HubSpot Pricing Tips</h4>
+            <ul>
+                <li><strong>Free CRM:</strong> Unlimited users and data with basic marketing, sales, and service tools.</li>
+                <li><strong>Starter ($30/month for 2 seats):</strong> Basic automation, forms, live chat, and reporting.</li>
+                <li><strong>Professional ($890/month for 3 seats):</strong> Advanced automation, A/B testing, custom reporting, and SEO tools.</li>
+                <li><strong>Enterprise ($3,600/month for 5 seats):</strong> Advanced permissions, custom objects, revenue attribution, and dedicated support.</li>
+            </ul>
+        </div>
+
+        <div class="affiliate-section">
+            <h4>🚀 CRM & Marketing Tools</h4>
+            <div class="affiliate-links">
+                <a href="https://www.hubspot.com" target="_blank" class="affiliate-link">Try HubSpot Free</a>
+                <a href="https://www.salesforce.com" target="_blank" class="affiliate-link">Try Salesforce</a>
+                <a href="https://pipedrive.com" target="_blank" class="affiliate-link">Try Pipedrive</a>
+                <a href="https://www.zoho.com/crm" target="_blank" class="affiliate-link">Try Zoho CRM</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function calc() {
+            const contacts = parseInt(document.getElementById('contacts').value) || 0;
+            const hub = document.getElementById('hub').value;
+            const needAutomation = document.getElementById('needAutomation').checked;
+            const needABTesting = document.getElementById('needABTesting').checked;
+            const needReporting = document.getElementById('needReporting').checked;
+            const needAdvanced = document.getElementById('needAdvanced').checked;
+
+            let plan = 'Free CRM';
+            let baseCost = 0;
+            let features = ['Unlimited users & data', 'Contact & deal management', 'Email tracking', 'Meeting scheduling', 'Live chat', 'Basic forms & reporting'];
+
+            if (needAdvanced || contacts > 10000) {
+                plan = 'Professional';
+                baseCost = 890;
+                features = ['Everything in Starter', 'Marketing automation', 'A/B testing', 'SEO recommendations', 'Custom reporting', 'Social media tools', 'Omni-channel automation', 'Video hosting'];
+            } else if (needAutomation || needABTesting || needReporting || contacts > 2000) {
+                plan = 'Starter';
+                baseCost = 30;
+                features = ['Everything in Free', 'Email marketing (2,000 contacts)', 'Forms & landing pages', 'Live chat & chatbots', 'Basic automation', 'Ad management', 'Contact & company insights'];
+            }
+
+            const contactCost = plan === 'Professional' ? Math.max(0, (contacts - 2000)) * 0.05 : 0;
+            const monthlyCost = baseCost + contactCost;
+
+            document.getElementById('result').innerHTML = `
+                <h3>Recommended: HubSpot ${plan}</h3>
+                <p>Best fit for ${contacts.toLocaleString()} contacts with ${hub}.</p>
+                <div class="plan-details">
+                    <p><strong>Monthly Cost:</strong> $${monthlyCost.toFixed(2)}</p>
+                    <p><strong>Annual Cost:</strong> $${(monthlyCost * 12).toFixed(2)}</p>
+                    <p style="margin-top: 15px;"><strong>Features:</strong></p>
+                    <ul style="margin-left: 20px;">${features.map(f => `<li>${f}</li>`).join('')}</ul>
+                </div>
+            `;
+            document.getElementById('result').classList.add('show');
+        }
+        window.addEventListener('load', calc);
+    </script>
+</body>
+</html>

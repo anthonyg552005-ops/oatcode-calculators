@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendly Pricing Calculator - Scheduling Tool Cost Estimator | OatCode</title>
+    <meta name="description" content="Calculate Calendly pricing based on your scheduling needs. Compare Free, Essentials, Professional, and Teams plans.">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
+        .container { max-width: 900px; margin: 0 auto; }
+        .header { text-align: center; color: white; margin-bottom: 30px; }
+        .header h1 { font-size: 2.5rem; margin-bottom: 10px; }
+        .calculator-card { background: white; border-radius: 20px; padding: 40px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); margin-bottom: 30px; }
+        .input-group { margin-bottom: 25px; }
+        .input-group label { display: block; font-weight: 600; margin-bottom: 8px; }
+        .input-group input, .input-group select { width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 16px; }
+        .checkbox-group label { display: flex; align-items: center; margin-bottom: 10px; cursor: pointer; }
+        .checkbox-group input { margin-right: 10px; }
+        .calculate-btn { width: 100%; padding: 15px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 8px; font-size: 18px; font-weight: 600; cursor: pointer; }
+        .result { margin-top: 30px; padding: 25px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); border-radius: 12px; color: white; display: none; }
+        .result.show { display: block; }
+        .result h3 { font-size: 1.8rem; margin-bottom: 15px; }
+        .plan-details { background: rgba(255,255,255,0.2); padding: 15px; border-radius: 8px; margin-top: 15px; }
+        .tips { background: #f8f9fa; padding: 25px; border-radius: 12px; margin-top: 20px; }
+        .tips h4 { color: #667eea; margin-bottom: 15px; }
+        .affiliate-section { margin-top: 30px; padding: 25px; background: #fff5f5; border-radius: 12px; }
+        .affiliate-links { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 15px; }
+        .affiliate-link { display: block; padding: 12px 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; text-decoration: none; border-radius: 8px; text-align: center; font-weight: 600; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📅 Calendly Pricing Calculator</h1>
+            <p>Find the perfect scheduling plan for your needs</p>
+        </div>
+
+        <div class="calculator-card">
+            <div class="input-group">
+                <label for="users">Number of Users</label>
+                <input type="number" id="users" min="1" value="1" placeholder="e.g., 1">
+            </div>
+
+            <div class="input-group">
+                <label>Features Needed:</label>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" id="needUnlimited"> Unlimited Event Types</label>
+                </div>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" id="needIntegrations"> Advanced Integrations (Salesforce, PayPal)</label>
+                </div>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" id="needBranding"> Remove Calendly Branding</label>
+                </div>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" id="needTeam"> Team Features & Pooling</label>
+                </div>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" id="needAnalytics"> Advanced Analytics</label>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="billing">Billing</label>
+                <select id="billing">
+                    <option value="monthly">Monthly</option>
+                    <option value="annual">Annual (Save 20%)</option>
+                </select>
+            </div>
+
+            <button class="calculate-btn" onclick="calc()">Calculate Pricing</button>
+            <div class="result" id="result"></div>
+        </div>
+
+        <div class="tips">
+            <h4>💡 Calendly Tips</h4>
+            <ul>
+                <li><strong>Free:</strong> 1 event type, unlimited meetings, basic integrations (Google, Outlook, Zoom).</li>
+                <li><strong>Essentials ($10/seat):</strong> Unlimited event types, remove branding, text reminders, and Stripe integration.</li>
+                <li><strong>Professional ($16/seat):</strong> Salesforce integration, live chat support, advanced customization.</li>
+                <li><strong>Teams ($20/seat):</strong> Round robin, team scheduling, admin controls, and reporting.</li>
+            </ul>
+        </div>
+
+        <div class="affiliate-section">
+            <h4>🚀 Scheduling Alternatives</h4>
+            <div class="affiliate-links">
+                <a href="https://calendly.com" target="_blank" class="affiliate-link">Try Calendly Free</a>
+                <a href="https://cal.com" target="_blank" class="affiliate-link">Try Cal.com</a>
+                <a href="https://savvycal.com" target="_blank" class="affiliate-link">Try SavvyCal</a>
+                <a href="https://acuityscheduling.com" target="_blank" class="affiliate-link">Try Acuity</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function calc() {
+            const users = parseInt(document.getElementById('users').value) || 1;
+            const billing = document.getElementById('billing').value;
+            const needUnlimited = document.getElementById('needUnlimited').checked;
+            const needIntegrations = document.getElementById('needIntegrations').checked;
+            const needBranding = document.getElementById('needBranding').checked;
+            const needTeam = document.getElementById('needTeam').checked;
+            const needAnalytics = document.getElementById('needAnalytics').checked;
+
+            let plan = 'Free';
+            let perSeatMonthly = 0;
+            let perSeatAnnual = 0;
+            let features = ['1 event type', 'Unlimited meetings', 'Google Calendar & Outlook sync', 'Zoom integration', 'Email notifications'];
+
+            if (needTeam || needAnalytics || users > 3) {
+                plan = 'Teams';
+                perSeatMonthly = 20;
+                perSeatAnnual = 16;
+                features = ['Everything in Professional', 'Round robin scheduling', 'Team pages', 'Admin management', 'Salesforce routing', 'Advanced analytics'];
+            } else if (needIntegrations) {
+                plan = 'Professional';
+                perSeatMonthly = 16;
+                perSeatAnnual = 12.80;
+                features = ['Everything in Essentials', 'Salesforce integration', 'Live chat support', 'Advanced customization', 'SMS workflows', 'HubSpot integration'];
+            } else if (needUnlimited || needBranding) {
+                plan = 'Essentials';
+                perSeatMonthly = 10;
+                perSeatAnnual = 8;
+                features = ['Unlimited event types', 'Connect to 6 calendars', 'Remove Calendly branding', 'Text reminders', 'Payment collection (Stripe, PayPal)', 'Email support'];
+            }
+
+            const pricePerSeat = billing === 'annual' ? perSeatAnnual : perSeatMonthly;
+            const monthlyCost = users * pricePerSeat;
+            const annualCost = monthlyCost * 12;
+
+            let savingsText = '';
+            if (billing === 'annual' && monthlyCost > 0) {
+                const monthlyTotal = users * perSeatMonthly * 12;
+                const savings = monthlyTotal - annualCost;
+                savingsText = `<p><strong>💰 Annual Savings:</strong> $${savings.toFixed(2)}/year</p>`;
+            }
+
+            document.getElementById('result').innerHTML = `
+                <h3>Recommended: Calendly ${plan}</h3>
+                <p>Perfect for ${users} user${users > 1 ? 's' : ''}.</p>
+                <div class="plan-details">
+                    <p><strong>Monthly Cost:</strong> $${monthlyCost.toFixed(2)}</p>
+                    <p><strong>Annual Cost:</strong> $${annualCost.toFixed(2)}</p>
+                    ${savingsText}
+                    <p style="margin-top: 15px;"><strong>Features:</strong></p>
+                    <ul style="margin-left: 20px;">${features.map(f => `<li>${f}</li>`).join('')}</ul>
+                </div>
+            `;
+            document.getElementById('result').classList.add('show');
+        }
+        window.addEventListener('load', calc);
+    </script>
+</body>
+</html>

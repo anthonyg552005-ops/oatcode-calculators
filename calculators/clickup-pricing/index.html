@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClickUp Pricing Calculator - Find Your Perfect Plan | OatCode</title>
+    <meta name="description" content="Calculate the best ClickUp plan for your team. Compare Free, Unlimited, Business, and Enterprise plans based on users, storage, and features needed.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .calculator-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            margin-bottom: 30px;
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+        }
+
+        .input-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .input-group input,
+        .input-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .input-group input:focus,
+        .input-group select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .checkbox-group {
+            margin-bottom: 15px;
+        }
+
+        .checkbox-group label {
+            display: flex;
+            align-items: center;
+            font-weight: normal;
+            cursor: pointer;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+            margin-right: 10px;
+        }
+
+        .calculate-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .result {
+            margin-top: 30px;
+            padding: 25px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border-radius: 12px;
+            color: white;
+            display: none;
+        }
+
+        .result.show {
+            display: block;
+        }
+
+        .result h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+
+        .result p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .plan-details {
+            background: rgba(255,255,255,0.2);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+
+        .tips {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 12px;
+            margin-top: 20px;
+        }
+
+        .tips h4 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .tips ul {
+            margin-left: 20px;
+        }
+
+        .tips li {
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+
+        .affiliate-section {
+            margin-top: 30px;
+            padding: 25px;
+            background: #fff5f5;
+            border-radius: 12px;
+            border-left: 4px solid #f5576c;
+        }
+
+        .affiliate-section h4 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .affiliate-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .affiliate-link {
+            display: block;
+            padding: 12px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 600;
+            transition: transform 0.2s;
+        }
+
+        .affiliate-link:hover {
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .calculator-card {
+                padding: 25px;
+            }
+
+            .affiliate-links {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 ClickUp Pricing Calculator</h1>
+            <p>Find the perfect ClickUp plan for your team size and needs</p>
+        </div>
+
+        <div class="calculator-card">
+            <div class="input-group">
+                <label for="teamSize">Number of Team Members</label>
+                <input type="number" id="teamSize" min="1" value="5" placeholder="e.g., 5">
+            </div>
+
+            <div class="input-group">
+                <label for="storageNeeds">Storage Needs</label>
+                <select id="storageNeeds">
+                    <option value="100">100 MB (Basic)</option>
+                    <option value="1000" selected>Unlimited Storage</option>
+                    <option value="unlimited">Unlimited + Advanced Features</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label>Features Needed:</label>
+                <div class="checkbox-group">
+                    <label>
+                        <input type="checkbox" id="needGuests" checked>
+                        Guest Access
+                    </label>
+                </div>
+                <div class="checkbox-group">
+                    <label>
+                        <input type="checkbox" id="needTimeline">
+                        Timeline & Gantt Charts
+                    </label>
+                </div>
+                <div class="checkbox-group">
+                    <label>
+                        <input type="checkbox" id="needAutomations">
+                        Advanced Automations (Unlimited)
+                    </label>
+                </div>
+                <div class="checkbox-group">
+                    <label>
+                        <input type="checkbox" id="needDashboards">
+                        Custom Dashboards
+                    </label>
+                </div>
+                <div class="checkbox-group">
+                    <label>
+                        <input type="checkbox" id="needTimeTracking">
+                        Time Tracking
+                    </label>
+                </div>
+                <div class="checkbox-group">
+                    <label>
+                        <input type="checkbox" id="needApiAccess">
+                        API Access
+                    </label>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="budget">Monthly Budget (USD)</label>
+                <input type="number" id="budget" min="0" value="100" placeholder="e.g., 100">
+            </div>
+
+            <button class="calculate-btn" onclick="calculatePlan()">Calculate Best Plan</button>
+
+            <div class="result" id="result"></div>
+        </div>
+
+        <div class="tips">
+            <h4>💡 ClickUp Pricing Tips</h4>
+            <ul>
+                <li><strong>Free Plan:</strong> Great for personal use or small teams (up to 5 members) with basic needs. Includes 100MB storage and unlimited tasks.</li>
+                <li><strong>Unlimited ($7/user/month):</strong> Best for small teams needing unlimited storage, integrations, and guests. Includes Gantt charts and column calculations.</li>
+                <li><strong>Business ($12/user/month):</strong> Ideal for growing teams needing advanced features like Google SSO, unlimited teams, and advanced automations.</li>
+                <li><strong>Enterprise (Custom):</strong> For large organizations requiring white labeling, advanced permissions, dedicated support, and MSA.</li>
+                <li><strong>Annual Discount:</strong> Save up to 20% by paying annually instead of monthly.</li>
+                <li><strong>Free Trial:</strong> ClickUp offers unlimited free trial of Business features - test before committing.</li>
+            </ul>
+        </div>
+
+        <div class="affiliate-section">
+            <h4>🚀 Popular Project Management Tools</h4>
+            <p>Compare these alternatives to find the best fit:</p>
+            <div class="affiliate-links">
+                <a href="https://clickup.com" target="_blank" rel="noopener" class="affiliate-link">Try ClickUp Free</a>
+                <a href="https://monday.com" target="_blank" rel="noopener" class="affiliate-link">Try Monday.com</a>
+                <a href="https://asana.com" target="_blank" rel="noopener" class="affiliate-link">Try Asana</a>
+                <a href="https://www.notion.so" target="_blank" rel="noopener" class="affiliate-link">Try Notion</a>
+                <a href="https://trello.com" target="_blank" rel="noopener" class="affiliate-link">Try Trello</a>
+                <a href="https://www.airtable.com" target="_blank" rel="noopener" class="affiliate-link">Try Airtable</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function calculatePlan() {
+            const teamSize = parseInt(document.getElementById('teamSize').value) || 1;
+            const storageNeeds = document.getElementById('storageNeeds').value;
+            const budget = parseInt(document.getElementById('budget').value) || 0;
+
+            const needGuests = document.getElementById('needGuests').checked;
+            const needTimeline = document.getElementById('needTimeline').checked;
+            const needAutomations = document.getElementById('needAutomations').checked;
+            const needDashboards = document.getElementById('needDashboards').checked;
+            const needTimeTracking = document.getElementById('needTimeTracking').checked;
+            const needApiAccess = document.getElementById('needApiAccess').checked;
+
+            let recommendedPlan = '';
+            let monthlyCost = 0;
+            let annualCost = 0;
+            let reasoning = '';
+            let features = [];
+
+            // Calculate feature score
+            let featureScore = 0;
+            if (needTimeline) featureScore += 1;
+            if (needAutomations) featureScore += 2;
+            if (needDashboards) featureScore += 2;
+            if (needTimeTracking) featureScore += 1;
+            if (needApiAccess) featureScore += 1;
+
+            // Determine plan based on needs
+            if (teamSize <= 5 && storageNeeds === '100' && featureScore === 0 && budget < 50) {
+                recommendedPlan = 'Free Forever';
+                monthlyCost = 0;
+                annualCost = 0;
+                features = [
+                    '100 MB storage',
+                    'Unlimited tasks and members (up to 5)',
+                    'Collaborative docs',
+                    'Kanban boards',
+                    'Sprint management',
+                    'Real-time chat',
+                    '24/7 support'
+                ];
+                reasoning = 'The Free plan is perfect for your needs! With a small team and basic requirements, you can get started with ClickUp at no cost.';
+            } else if (featureScore <= 2 && (!needAutomations && !needDashboards)) {
+                recommendedPlan = 'Unlimited';
+                monthlyCost = teamSize * 7;
+                annualCost = teamSize * 5 * 12; // $5/user/month billed annually
+                features = [
+                    'Unlimited storage',
+                    'Unlimited integrations',
+                    'Unlimited dashboards',
+                    'Unlimited custom fields',
+                    'Gantt charts & timeline view',
+                    'Column calculations',
+                    'Guests with permissions',
+                    'Email in ClickUp'
+                ];
+                reasoning = `The Unlimited plan gives you unlimited storage and core project management features at $7/user/month (or $5/user/month annually).`;
+            } else if (featureScore <= 4 || needAutomations || needDashboards) {
+                recommendedPlan = 'Business';
+                monthlyCost = teamSize * 12;
+                annualCost = teamSize * 9 * 12; // $9/user/month billed annually
+                features = [
+                    'Everything in Unlimited',
+                    'Google SSO',
+                    'Unlimited teams',
+                    'Advanced automations (unlimited)',
+                    'Advanced dashboard features',
+                    'Custom exporting',
+                    'Advanced public sharing',
+                    'Timeline & mind maps'
+                ];
+                reasoning = `The Business plan is ideal for your team. With advanced features like unlimited automations and custom dashboards, you'll have everything you need at $12/user/month (or $9/user/month annually).`;
+            } else {
+                recommendedPlan = 'Enterprise';
+                monthlyCost = 'Custom Pricing';
+                annualCost = 'Contact Sales';
+                features = [
+                    'Everything in Business',
+                    'White labeling',
+                    'Advanced permissions',
+                    'Unlimited custom roles',
+                    'Enterprise API',
+                    'Dedicated success manager',
+                    'MSA & HIPAA compliance',
+                    'Single Sign-On (SSO)',
+                    'Advanced security controls'
+                ];
+                reasoning = 'Based on your advanced needs, the Enterprise plan is recommended. Contact ClickUp sales for custom pricing tailored to your organization.';
+            }
+
+            // Calculate savings
+            let savingsText = '';
+            if (typeof monthlyCost === 'number' && monthlyCost > 0) {
+                const monthlyCostAnnual = monthlyCost * 12;
+                const savings = monthlyCostAnnual - annualCost;
+                const savingsPercent = Math.round((savings / monthlyCostAnnual) * 100);
+                savingsText = `<p><strong>💰 Save ${savingsPercent}%:</strong> Pay annually and save $${savings}/year (${savingsPercent}% discount)</p>`;
+            }
+
+            // Budget check
+            let budgetWarning = '';
+            if (budget > 0 && typeof monthlyCost === 'number' && monthlyCost > budget) {
+                budgetWarning = `<p style="background: rgba(255,255,255,0.3); padding: 10px; border-radius: 6px; margin-top: 10px;"><strong>⚠️ Budget Note:</strong> This plan ($${monthlyCost}/month) exceeds your budget of $${budget}/month. Consider starting with a lower tier or reducing team size.</p>`;
+            }
+
+            // Display result
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `
+                <h3>Recommended: ${recommendedPlan}</h3>
+                <p>${reasoning}</p>
+                <div class="plan-details">
+                    <p><strong>Monthly Cost:</strong> ${typeof monthlyCost === 'number' ? '$' + monthlyCost : monthlyCost}</p>
+                    <p><strong>Annual Cost:</strong> ${typeof annualCost === 'number' ? '$' + annualCost : annualCost}</p>
+                    ${savingsText}
+                    <p style="margin-top: 15px;"><strong>Key Features:</strong></p>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        ${features.map(f => `<li>${f}</li>`).join('')}
+                    </ul>
+                </div>
+                ${budgetWarning}
+            `;
+            resultDiv.classList.add('show');
+            resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        // Calculate on page load
+        window.addEventListener('load', calculatePlan);
+    </script>
+</body>
+</html>

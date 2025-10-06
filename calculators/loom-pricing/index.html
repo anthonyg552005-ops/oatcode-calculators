@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loom Pricing Calculator - Video Messaging Cost Estimator | OatCode</title>
+    <meta name="description" content="Calculate Loom pricing based on team size and video needs. Compare Starter, Business, and Enterprise plans.">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
+        .container { max-width: 900px; margin: 0 auto; }
+        .header { text-align: center; color: white; margin-bottom: 30px; }
+        .header h1 { font-size: 2.5rem; margin-bottom: 10px; }
+        .calculator-card { background: white; border-radius: 20px; padding: 40px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); margin-bottom: 30px; }
+        .input-group { margin-bottom: 25px; }
+        .input-group label { display: block; font-weight: 600; margin-bottom: 8px; }
+        .input-group input, .input-group select { width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 16px; }
+        .checkbox-group label { display: flex; align-items: center; margin-bottom: 10px; cursor: pointer; }
+        .checkbox-group input { margin-right: 10px; }
+        .calculate-btn { width: 100%; padding: 15px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 8px; font-size: 18px; font-weight: 600; cursor: pointer; }
+        .result { margin-top: 30px; padding: 25px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); border-radius: 12px; color: white; display: none; }
+        .result.show { display: block; }
+        .result h3 { font-size: 1.8rem; margin-bottom: 15px; }
+        .plan-details { background: rgba(255,255,255,0.2); padding: 15px; border-radius: 8px; margin-top: 15px; }
+        .tips { background: #f8f9fa; padding: 25px; border-radius: 12px; margin-top: 20px; }
+        .tips h4 { color: #667eea; margin-bottom: 15px; }
+        .affiliate-section { margin-top: 30px; padding: 25px; background: #fff5f5; border-radius: 12px; }
+        .affiliate-links { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 15px; }
+        .affiliate-link { display: block; padding: 12px 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; text-decoration: none; border-radius: 8px; text-align: center; font-weight: 600; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎥 Loom Pricing Calculator</h1>
+            <p>Calculate video messaging costs for your team</p>
+        </div>
+
+        <div class="calculator-card">
+            <div class="input-group">
+                <label for="creators">Video Creators</label>
+                <input type="number" id="creators" min="1" value="3" placeholder="e.g., 3">
+            </div>
+
+            <div class="input-group">
+                <label>Features Needed:</label>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" id="needUnlimited"> Unlimited Videos</label>
+                </div>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" id="needBranding"> Custom Branding</label>
+                </div>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" id="needAnalytics"> Video Analytics</label>
+                </div>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" id="needCTA"> Custom CTAs</label>
+                </div>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" id="needSSO"> SAML SSO</label>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="billing">Billing</label>
+                <select id="billing">
+                    <option value="monthly">Monthly</option>
+                    <option value="annual">Annual (Save 20%)</option>
+                </select>
+            </div>
+
+            <button class="calculate-btn" onclick="calc()">Calculate Pricing</button>
+            <div class="result" id="result"></div>
+        </div>
+
+        <div class="tips">
+            <h4>💡 Loom Pricing Guide</h4>
+            <ul>
+                <li><strong>Starter (Free):</strong> Up to 25 videos, 5 min per video, basic recording features.</li>
+                <li><strong>Business ($12.50/creator):</strong> Unlimited videos, custom branding, video analytics, and priority support.</li>
+                <li><strong>Enterprise (Custom):</strong> Advanced security, SAML SSO, custom data retention, and dedicated support.</li>
+                <li><strong>Viewers are Free:</strong> Only pay for people creating videos, not viewers.</li>
+            </ul>
+        </div>
+
+        <div class="affiliate-section">
+            <h4>🚀 Video Tools</h4>
+            <div class="affiliate-links">
+                <a href="https://loom.com" target="_blank" class="affiliate-link">Try Loom Free</a>
+                <a href="https://www.veed.io" target="_blank" class="affiliate-link">Try VEED</a>
+                <a href="https://riverside.fm" target="_blank" class="affiliate-link">Try Riverside</a>
+                <a href="https://descript.com" target="_blank" class="affiliate-link">Try Descript</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function calc() {
+            const creators = parseInt(document.getElementById('creators').value) || 1;
+            const billing = document.getElementById('billing').value;
+            const needUnlimited = document.getElementById('needUnlimited').checked;
+            const needBranding = document.getElementById('needBranding').checked;
+            const needAnalytics = document.getElementById('needAnalytics').checked;
+            const needCTA = document.getElementById('needCTA').checked;
+            const needSSO = document.getElementById('needSSO').checked;
+
+            let plan = 'Starter (Free)';
+            let perCreatorMonthly = 0;
+            let perCreatorAnnual = 0;
+            let features = ['Up to 25 videos total', '5 minutes per video', 'Screen & camera recording', 'Basic editing', 'Unlimited viewers', 'Loom branding'];
+
+            if (needSSO || creators > 50) {
+                plan = 'Enterprise';
+                perCreatorMonthly = 'Custom';
+                perCreatorAnnual = 'Custom';
+                features = ['Everything in Business', 'SAML SSO', 'Advanced security controls', 'Custom data retention', 'User provisioning (SCIM)', 'Advanced admin controls', 'Dedicated support'];
+            } else if (needUnlimited || needBranding || needAnalytics || needCTA) {
+                plan = 'Business';
+                perCreatorMonthly = 12.50;
+                perCreatorAnnual = 10;
+                features = ['Unlimited videos', 'Unlimited video length', 'Custom branding', 'Video analytics & insights', 'Custom CTAs', 'Password protection', 'Video editing', 'Priority support'];
+            }
+
+            let monthlyCost = 0;
+            let annualCost = 0;
+
+            if (typeof perCreatorMonthly === 'number') {
+                const pricePerCreator = billing === 'annual' ? perCreatorAnnual : perCreatorMonthly;
+                monthlyCost = creators * pricePerCreator;
+                annualCost = monthlyCost * 12;
+            }
+
+            let costText = plan === 'Enterprise' ?
+                `<p><strong>Monthly Cost:</strong> Contact Sales for pricing</p>
+                 <p><strong>Annual Cost:</strong> Contact Sales for pricing</p>` :
+                `<p><strong>Monthly Cost:</strong> $${monthlyCost.toFixed(2)}</p>
+                 <p><strong>Annual Cost:</strong> $${annualCost.toFixed(2)}</p>`;
+
+            let savingsText = '';
+            if (billing === 'annual' && typeof perCreatorMonthly === 'number' && monthlyCost > 0) {
+                const monthlyTotal = creators * perCreatorMonthly * 12;
+                const savings = monthlyTotal - annualCost;
+                savingsText = `<p><strong>💰 Annual Savings:</strong> $${savings.toFixed(2)}/year</p>`;
+            }
+
+            document.getElementById('result').innerHTML = `
+                <h3>Recommended: Loom ${plan}</h3>
+                <p>Perfect for ${creators} video creator${creators > 1 ? 's' : ''}.</p>
+                <div class="plan-details">
+                    ${costText}
+                    ${savingsText}
+                    <p style="margin-top: 15px;"><strong>Features:</strong></p>
+                    <ul style="margin-left: 20px;">${features.map(f => `<li>${f}</li>`).join('')}</ul>
+                </div>
+            `;
+            document.getElementById('result').classList.add('show');
+        }
+        window.addEventListener('load', calc);
+    </script>
+</body>
+</html>
