@@ -30,12 +30,12 @@
     "ratingValue": "4.8",
     "ratingCount": "127"
   }
-}</script><!-- Google Analytics (User: Replace G-XXXXXXXXXX with your GA4 Measurement ID) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+}</script><!-- Google Analytics (User: Replace G-V3RC11M9X with your GA4 Measurement ID) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-V3RC11M9X"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-  gtag('config', 'G-XXXXXXXXXX');
+  gtag('config', 'G-V3RC11M9X');
 </script>
 </head><body><div class="container"><div class="header"><h1>🌊 Wave Accounting Pricing Calculator</h1></div><div class="calculator-card"><div class="input-group"><label>Add-ons</label><select id="addon"><option value="0">Free Accounting</option><option value="20">+ Payroll ($20/month + $6/employee)</option><option value="16">+ Wave Advisors ($149/month tax filing)</option></select></div><button class="calculate-btn" onclick="calc()">Calculate Cost</button><div class="result" id="result"></div></div></div><script>function calc(){const addon=parseFloat(document.getElementById('addon').value);document.getElementById('result').innerHTML=`<h3>Wave Cost</h3><div class="plan-details"><p><strong>Accounting:</strong> Free</p><p><strong>Add-ons:</strong> $${addon}/month</p><p><strong>Payment Processing:</strong> 2.9% + $0.60 per transaction</p></div>`;document.getElementById('result').classList.add('show')}window.addEventListener('load',calc);</script></body></html>

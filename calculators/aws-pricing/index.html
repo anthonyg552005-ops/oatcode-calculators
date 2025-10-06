@@ -30,12 +30,12 @@
     "ratingValue": "4.8",
     "ratingCount": "127"
   }
-}</script><!-- Google Analytics (User: Replace G-XXXXXXXXXX with your GA4 Measurement ID) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+}</script><!-- Google Analytics (User: Replace G-V3RC11M9X with your GA4 Measurement ID) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-V3RC11M9X"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-  gtag('config', 'G-XXXXXXXXXX');
+  gtag('config', 'G-V3RC11M9X');
 </script>
 </head><body><div class="container"><div class="header"><h1>☁️ AWS EC2 Pricing Calculator</h1></div><div class="calculator-card"><div class="input-group"><label>Instance Type</label><select id="instance"><option value="8.35">t3.micro ($8.35/month)</option><option value="16.79">t3.small ($16.79/month)</option><option value="33.58">t3.medium ($33.58/month)</option><option value="67.15">t3.large ($67.15/month)</option><option value="134.30">t3.xlarge ($134.30/month)</option></select></div><button class="calculate-btn" onclick="calc()">Calculate Cost</button><div class="result" id="result"></div></div></div><script>function calc(){const monthly=parseFloat(document.getElementById('instance').value);document.getElementById('result').innerHTML=`<h3>AWS EC2 Cost</h3><div class="plan-details"><p><strong>Monthly:</strong> $${monthly.toFixed(2)}</p><p><strong>Annual:</strong> $${(monthly*12).toFixed(2)}</p><p>Note: Prices for us-east-1 region, on-demand pricing</p></div>`;document.getElementById('result').classList.add('show')}window.addEventListener('load',calc);</script></body></html>

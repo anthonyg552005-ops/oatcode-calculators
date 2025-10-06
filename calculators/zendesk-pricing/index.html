@@ -30,12 +30,12 @@
     "ratingValue": "4.8",
     "ratingCount": "127"
   }
-}</script><!-- Google Analytics (User: Replace G-XXXXXXXXXX with your GA4 Measurement ID) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+}</script><!-- Google Analytics (User: Replace G-V3RC11M9X with your GA4 Measurement ID) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-V3RC11M9X"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-  gtag('config', 'G-XXXXXXXXXX');
+  gtag('config', 'G-V3RC11M9X');
 </script>
 </head><body><div class="container"><div class="header"><h1>🎫 Zendesk Pricing Calculator</h1></div><div class="calculator-card"><div class="input-group"><label>Plan Type</label><select id="plan"><option value="19">Suite Team ($19/agent/month)</option><option value="49">Suite Growth ($49/agent/month)</option><option value="99">Suite Professional ($99/agent/month)</option><option value="150">Suite Enterprise ($150/agent/month)</option></select></div><div class="input-group"><label>Number of Agents</label><input type="number" id="agents" value="5" min="1"></div><button class="calculate-btn" onclick="calc()">Calculate Cost</button><div class="result" id="result"></div></div></div><script>function calc(){const price=parseFloat(document.getElementById('plan').value);const agents=parseInt(document.getElementById('agents').value)||0;const monthly=price*agents;const annual=monthly*12*0.9;document.getElementById('result').innerHTML=`<h3>Zendesk Pricing Estimate</h3><div class="plan-details"><p><strong>Agents:</strong> ${agents}</p><p><strong>Monthly Cost:</strong> $${monthly.toFixed(2)}</p><p><strong>Annual (10% discount):</strong> $${annual.toFixed(2)}</p><p><strong>Cost per Agent:</strong> $${price}/month</p></div>`;document.getElementById('result').classList.add('show')}window.addEventListener('load',calc);</script></body></html>

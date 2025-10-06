@@ -30,12 +30,12 @@
     "ratingValue": "4.8",
     "ratingCount": "127"
   }
-}</script><!-- Google Analytics (User: Replace G-XXXXXXXXXX with your GA4 Measurement ID) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+}</script><!-- Google Analytics (User: Replace G-V3RC11M9X with your GA4 Measurement ID) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-V3RC11M9X"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-  gtag('config', 'G-XXXXXXXXXX');
+  gtag('config', 'G-V3RC11M9X');
 </script>
 </head><body><div class="container"><div class="header"><h1>📺 YouTube Ad Revenue Calculator</h1><p>Estimate monthly earnings from ads</p></div><div class="calculator-card"><div class="input-group"><label for="views">Monthly Views</label><input type="number" id="views" min="0" value="100000"></div><div class="input-group"><label for="cpm">Estimated CPM ($)</label><input type="number" id="cpm" min="0" step="0.01" value="3"></div><button class="calculate-btn" onclick="calc()">Calculate Revenue</button><div class="result" id="result"></div></div><div class="tips"><h4>💡 YouTube Revenue Guide</h4><ul><li><strong>CPM Range:</strong> $0.25 - $10+ depending on niche</li><li><strong>RPM (Revenue Per Mille):</strong> What you actually earn after YouTube's cut (45%)</li><li><strong>Requirements:</strong> 1,000 subscribers + 4,000 watch hours</li><li><strong>Payment:</strong> Minimum $100 balance to withdraw</li></ul></div><div class="affiliate-section"><h4>🚀 Creator Tools</h4><div class="affiliate-links"><a href="https://www.youtube.com/creators" target="_blank" class="affiliate-link">YouTube Creator</a><a href="https://www.tubebuddy.com" target="_blank" class="affiliate-link">TubeBuddy</a><a href="https://vidiq.com" target="_blank" class="affiliate-link">VidIQ</a></div></div></div><script>function calc(){const views=parseInt(document.getElementById('views').value)||0;const cpm=parseFloat(document.getElementById('cpm').value)||0;const grossRevenue=(views/1000)*cpm;const youtubeShare=grossRevenue*0.55;const rpm=cpm*0.55;const annual=youtubeShare*12;document.getElementById('result').innerHTML=`<h3>Estimated YouTube Earnings</h3><div class="plan-details"><p><strong>Monthly Views:</strong> ${views.toLocaleString()}</p><p><strong>CPM:</strong> $${cpm.toFixed(2)}</p><p><strong>Your Share (55%):</strong> $${youtubeShare.toFixed(2)}</p><p><strong>RPM:</strong> $${rpm.toFixed(2)}</p><p style="margin-top:15px;"><strong>Annual Projection:</strong> $${annual.toFixed(2)}</p></div>`;document.getElementById('result').classList.add('show')}window.addEventListener('load',calc);</script></body></html>
